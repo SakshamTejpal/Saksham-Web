@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import About from './components/About';
 import Contact from './components/Contact';
-import Header from './components/Header';
+import Hero from './components/Hero';
 import Projects from './components/Projects';
 
 
@@ -13,15 +13,9 @@ function App() {
 
   return (
     <div>
-      <Header />
-                
-      <div>
-        <About />
-      </div>
+      <Hero />
+      <About />          
 
-      <Contact />
-
-      <Projects />
       
     </div>
   )

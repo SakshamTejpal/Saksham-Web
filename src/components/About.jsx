@@ -1,8 +1,11 @@
 function About() {
   return (
     <section className="splits">
-      <h2>About Me</h2>
-      <p>I love building React apps and learning modern web tech.</p>
+      <div className="about-grid">
+        <div className="block block-small"> <p>Image</p> <br /> <p>Saksham Tejpal</p></div>
+        <div className="block block-small"> {/* small block #2 */} </div>
+        <div className="block block-large"> {/* large block spanning both rows */} </div>
+      </div>
     </section>
   );
 }

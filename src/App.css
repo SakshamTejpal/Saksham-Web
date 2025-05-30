@@ -11,6 +11,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   height: 100%;
+  
 }
 
 /* Scroll Section */
@@ -22,10 +23,23 @@ section {
 #root {
   text-align: center;
   width: 100%;
-  overflow-x: hidden;
 }
 
+/* Sections */
 .splits {
+  height: 100vh;
+  width: 100vw;
+  background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
+    url('src/assets/diego-ph-5LOhydOtTKU-unsplash.jpg')no-repeat center center fixed;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
+
+/* Hero */
+.hero{
   height: 100vh;
   width: 100vw;
 }
@@ -48,6 +62,36 @@ section {
   font-weight: 400;
 }
 
+/* About */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;     /* left column is narrow, right twice as wide */
+  grid-template-rows: auto auto;      /* two rows */
+  padding: 10vh 10vw;
+  gap: 2rem;
+}
+
+.block {
+  background: rgba(255, 255, 255, 0.034);
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+/* position the two left-hand blocks */
+.block-small:nth-of-type(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+.block-small:nth-of-type(2) {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* make the big block span both rows on the right */
+.block-large {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
 
 
 

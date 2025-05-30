@@ -1,9 +1,8 @@
 import Clock from "./time";
-import deisgn from "../assets/design.png";
 
 function Hero() {
     return(
-        <section className="splits">
+        <section className="hero">
             <div>
                 <p className="hero-clock"><Clock /></p>
             </div>

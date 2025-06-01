@@ -12,9 +12,12 @@ function App() {
   return (
     <div>
       <Hero />
-      <About />          
-
-      
+      <About />
+      <Projects />  
+      <Contact />
+      <footer className="footer">
+        <p>© 2023 Saksham Tejpal. All rights reserved.</p>        
+      </footer>
     </div>
   )
 }

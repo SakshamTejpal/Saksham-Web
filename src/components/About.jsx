@@ -9,7 +9,7 @@ function About() {
     const observerOptions = {
       root: null,
       rootMargin: "10px",
-      threshold: 0.65, // when 65% of the section is visible
+      threshold: 0.5, // when 65% of the section is visible
     };
 
     const observerCallback = (entries) => {
@@ -33,7 +33,7 @@ function About() {
   }, []);
 
   return (
-    <section className="splits">
+    <section>
       <div ref={containerRef} className="about-content">
         <img
           src={profilePic}

@@ -4,7 +4,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
-import Timeline from './components/timeline.jsx';
+import Timeline from './components/Timeline.jsx';
 import Navbar from './components/Navbar';
 
 

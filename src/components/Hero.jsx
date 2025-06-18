@@ -6,8 +6,8 @@ function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const fadeStart = 5; // when scrollY = 0, opacity = 1
-      const fadeEnd = 200; // when scrollY >= 200, opacity = 0
+      const fadeStart = 45; // when scrollY = 60, opacity = 1
+      const fadeEnd = 500; // when scrollY >= 350, opacity = 0
       const y = window.scrollY;
       let newOpacity = 1;
 
@@ -27,12 +27,12 @@ function Hero() {
   }, []);
 
   return (
-    <section>
+    <section className="hero" id="hero">
       {/* Background layer: full‐width/height, absolutely positioned, controlled by bgOpacity */}
       <div
         className="hero-background"
         style={{
-          backgroundColor: `rgba(36, 36, 36, ${bgOpacity})`,
+          backgroundColor: `rgba(32, 32, 32, ${bgOpacity})`,
         }}
       ></div>
 
@@ -42,11 +42,11 @@ function Hero() {
           <Clock />
         </div>
         <div className="hero-wrapper">
-          <h1 className="hero-title">Hello! <br /> I am <br /> Saksham</h1>
+          <h1 className="hero-title">{""}Hello{"!"} <br /> I am <br /> Saksham</h1>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 export default Hero;

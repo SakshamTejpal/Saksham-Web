@@ -1,20 +1,33 @@
-// src/components/ClockLocation.jsx
 import { useState, useEffect } from "react";
+import { GlobeSimple } from "phosphor-react";
 
 export default function Clock() {
-  // --- Time State & Effect ---
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // --- Raw Geo State & Effect ---
   const [position, setPosition] = useState({
     latitude: null,
     longitude: null,
     error: null,
   });
+
+  const [geoPermission, setGeoPermission] = useState(Date.now());
+
+  // Listen for permission changes
+  useEffect(() => {
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: "geolocation" }).then((permissionStatus) => {
+        permissionStatus.onchange = () => {
+          console.log("Geolocation permission changed:", permissionStatus.state);
+          setGeoPermission(Date.now());
+        };
+      });
+    }
+  }, []);
+
   useEffect(() => {
     if (!navigator.geolocation) {
       setPosition((pos) => ({ ...pos, error: "Geolocation not supported" }));
@@ -30,34 +43,29 @@ export default function Clock() {
       (err) => setPosition((pos) => ({ ...pos, error: err.message }))
     );
     return () => navigator.geolocation.clearWatch(watcher);
-  }, []);
+  }, [geoPermission]);
 
-  // --- Reverse-Geocode to City Name ---
   const [city, setCity] = useState(null);
   useEffect(() => {
     const { latitude, longitude, error } = position;
-    if (error || latitude == null) return;        // bail if no coords or we already have an error
+    if (error || latitude == null) return;
     const url = new URL("https://nominatim.openstreetmap.org/reverse");
     url.searchParams.set("format", "json");
     url.searchParams.set("lat", latitude);
     url.searchParams.set("lon", longitude);
 
-    fetch(url, {
-      headers: { "Accept-Language": "en" },
-    })
+    fetch(url, { headers: { "Accept-Language": "en" } })
       .then((res) => res.json())
       .then((data) => {
         const addr = data.address || {};
-        // try a series of fallbacks for place names:
         setCity(addr.city || addr.town || addr.village || addr.county || "Unknown place");
       })
       .catch((err) => {
         console.error(err);
-        setCity(`Error: ${err.message}`);
+        setCity(`My bad, some error happened`);
       });
   }, [position.latitude, position.longitude, position.error]);
 
-  // --- Formatting ---
   const timeString = now.toLocaleTimeString(undefined, {
     hour: "2-digit",
     minute: "2-digit",
@@ -66,14 +74,18 @@ export default function Clock() {
 
   let locationDisplay;
   if (position.error) {
-    locationDisplay = `Error: ${position.error}`;
+    locationDisplay = `Don't worry, I won't track your location`;
   } else if (city) {
     locationDisplay = `${city}`;
   } else {
-    locationDisplay = "🌐 Locating…";
+    locationDisplay = (
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+        <GlobeSimple size={24} weight="regular" color="white" />
+        Locating…
+      </span>
+    );
   }
 
-  // --- Render ---
   return (
     <div className="clock-location">
       <div className="clock-time">{timeString}</div>

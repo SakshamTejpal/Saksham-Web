@@ -4,6 +4,9 @@ import About from './components/about';
 import Contact from './components/Contact';
 import Hero from './components/Hero';
 import Projects from './components/Projects';
+import Timeline from './components/timeline.jsx';
+import Navbar from './components/Navbar';
+
 
 
 function App() {
@@ -11,12 +14,13 @@ function App() {
 
   return (
     <div>
+      <Navbar />
       <Hero />
       <About />
-      <Projects />  
+      <Timeline />
       <Contact />
       <footer className="footer">
-        <p>© 2023 Saksham Tejpal. All rights reserved.</p>        
+        <p>© 2025 Saksham Tejpal. All rights reserved.</p>        
       </footer>
     </div>
   )

@@ -9,12 +9,11 @@ function About() {
     const observerOptions = {
       root: null,
       rootMargin: "10px",
-      threshold: 0.5, // when 65% of the section is visible
+      threshold: 0.3, // when 30% of the section is visible
     };
 
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
-        // entry.isIntersecting === true when the section enters viewport
         setIsVisible(entry.isIntersecting);
       });
     };
@@ -33,7 +32,7 @@ function About() {
   }, []);
 
   return (
-    <section>
+    <section className="about" id="about">
       <div ref={containerRef} className="about-content">
         <img
           src={profilePic}
@@ -42,10 +41,29 @@ function About() {
         />
         <div className={`about-text ${isVisible ? "visible" : ""}`}>
           <p>
-            I’m Saksham Tejpal, a web developer currently learning React. I enjoy
-            creating clean, minimal dark‐themed portfolios that showcase my
-            projects and skills. Feel free to explore and reach out!
+            I’m a <span className="about-highlight">Software Developer</span> passionate about solving
+            logical problems and creating unique solutions. I’m currently pursuing
+            <span className="about-highlight"> Bachelor's of Computer Science</span> specializing in
+            <span className="about-highlight"> Data Science</span> at Ontario Tech University,
+            and will graduate in May 2026. 
           </p>
+          <br />
+          <p>
+            I love diving into <span className="about-highlight">back-end development</span>,
+            <span className="about-highlight"> data science</span>, <span className="about-highlight">data structures</span>,
+            and <span className="about-highlight">algorithms</span>, where I can transform abstract problems into elegant, high-performance code.
+            I’ve built <span className="about-highlight">full-stack web</span> and <span className="about-highlight">mobile applications</span>
+             and administered databases. Lately, I’ve been exploring
+            <span className="about-highlight"> Machine Learning</span> and <span className="about-highlight">Agentic AI </span>
+            to architect smarter, adaptive systems for modern software.
+          </p>
+          <br />
+          <p>
+            When I’m not coding, you’ll find me <span className="about-highlight">kickboxing</span>, playing
+            <span className="about-highlight"> basketball</span>, or discovering new
+            <span className="about-highlight"> cafés</span> and <span className="about-highlight">bars</span> around Toronto.
+          </p>
+          <br />
         </div>
       </div>
     </section>

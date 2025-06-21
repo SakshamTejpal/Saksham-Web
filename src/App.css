@@ -1,16 +1,4 @@
-.swipe-arrow {
-  margin-right: 5px;
-  display: inline-block;
-  animation: swipePulse 1.5s infinite;
-  font-size: 28px;
-  opacity: 0.7;
-}
 
-@keyframes swipePulse {
-  0% { transform: translateX(0); opacity: 0.5; }
-  50% { transform: translateX(-5px); opacity: 1; }
-  100% { transform: translateX(0); opacity: 0.5; }
-}
 /* ───────────────────────────────────────────────────────────────────────────
    Reset + Global
 ─────────────────────────────────────────────────────────────────────────── */
@@ -20,7 +8,7 @@ html, body {
   font-size: 16px;
 
 background-image: 
-  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
   url("/assets/diego-ph-5LOhydOtTKU-unsplash.jpg");
 background-size: cover;
 background-repeat: no-repeat;
@@ -191,7 +179,7 @@ background-attachment: fixed;
 .profile-image {
   border-radius: 999px;
   width: 18vw;
-  height: 30vw;
+  height: 30vh;
   transform: translateY(-150px);
   opacity: 0;
   transition: transform 0.5s ease-out, opacity 0.5s ease-out;
@@ -561,6 +549,19 @@ background-attachment: fixed;
   }
 }
 @media (max-width: 500px) {
+  .swipe-arrow {
+  margin-right: 0px;
+  display: inline-block;
+  animation: swipePulse 1.5s infinite;
+  font-size: 28px;
+  opacity: 0.7;
+}
+
+@keyframes swipePulse {
+  0% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(-5px); opacity: 1; }
+  100% { transform: translateX(0); opacity: 0.5; }
+}
   .hero-title {
     font-size: 23vw;
   }
@@ -568,30 +569,47 @@ background-attachment: fixed;
     font-size: 20px;
   }
   .hero-wrapper {
-    padding: 30vh 0 10vh 0;
+    padding: 25vh 0 10vh 0;
   }
-  .about-content {
+
+  .about{
+    padding-bottom: 30vh;
+  }
+  .about-content{
+    gap: 1rem;
     flex-direction: column;
-    justify-content: flex-start;
-    height: 100vh;
-    padding: 8vh 0 0 0;
+  }
+  .about-content .about-text {
+    padding : 0px
+  }
+  .about-content .about-text p {
+    font-size: 18px !important;
+  }
+  .about-highlight{
+    font-size: 18px !important;
   }
   .profile-image {
-    max-width: 35vw;
-    margin-bottom: 0rem;
-    transform: translateY(-80px);
-    opacity: 0;
-    transition: transform 1s ease-out, opacity 1s ease-out;
+    /* 1) Drop any global caps */
+    max-width: none !important;
+    max-height: none !important;
+
+    /* 2) Force a tall box (80% of viewport height) */
+    height: 25vh !important;
+
+    /* 3) Let width be auto but constrain it to a 1:3 ratio */
+    aspect-ratio: 1 / 1.5;
+    width: auto !important;
+
+    /* 4) Fully round the ends */
+    border-radius: 9999px !important;
+
+    /* 5) Fill the box without distortion */
+    object-fit: cover;
+    display: block;
   }
-  .about-text {
-    max-width: 80vw;
-    text-align: center;
-    padding: 0rem;
-    font-size: 20px;
-    transform: translateY(200px);
-    opacity: 0;
-    transition: transform 1s ease-out, opacity 1s ease-out;
-  }
+
+
+
   .nav-label.menu-alt {
     right: 10px;
     font-size: 20px;

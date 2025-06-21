@@ -52,7 +52,7 @@ function About() {
             I love diving into <span className="about-highlight">back-end development</span>,
             <span className="about-highlight"> data science</span>, <span className="about-highlight">data structures</span>,
             and <span className="about-highlight">algorithms</span>, where I can transform abstract problems into elegant, high-performance code.
-            I’ve built <span className="about-highlight">full-stack web</span> and <span className="about-highlight">mobile applications</span>
+            I’ve built <span className="about-highlight">full-stack web</span> and <span className="about-highlight">mobile applications </span>
              and administered databases. Lately, I’ve been exploring
             <span className="about-highlight"> Machine Learning</span> and <span className="about-highlight">Agentic AI </span>
             to architect smarter, adaptive systems for modern software.

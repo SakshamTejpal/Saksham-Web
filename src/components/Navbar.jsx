@@ -103,7 +103,7 @@ function Navbar() {
           <li><a href="#hero">{showIcons ? <House size={30} /> : "Home"}</a></li>
           <li><a href="#about">{showIcons ? <UserCircle size={30} /> : "About"}</a></li>
           <li><a href="#timeline">{showIcons ? <CalendarBlank size={30} /> : "Timeline"}</a></li>
-          <li><a href="#projects">{showIcons ? <Wrench size={30} /> : "Projects"}</a></li>
+          {/* <li><a href="#projects">{showIcons ? <Wrench size={30} /> : "Projects"}</a></li> */}
           <li><a href="#contact">{showIcons ? <EnvelopeSimple size={30} /> : "Contact"}</a></li>
         </ul>
       </nav>

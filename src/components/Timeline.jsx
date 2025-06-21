@@ -2,12 +2,12 @@
 import React, { useEffect, useRef } from "react";
 
 const timelineData = [
-  {
-    year: "Jun 2023",
-    title: "Launched Web portfolio",
-    description:
-      "Deployed my first React portfolio site to showcase my background, projects, and skills.",
-  },
+  // {
+  //   year: "Jun 2025",
+  //   title: "Launched Web portfolio",
+  //   description:
+  //     "Deployed my first React portfolio site to showcase my background, projects, and skills.",
+  // },
   {
     year: "Sep 2022 - May 2026",
     title: "Bachelor's in Computer Science (Data Science)",

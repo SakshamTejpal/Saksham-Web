@@ -1,22 +1,16 @@
-/* ───────────────────────────────────────────────────────────────────────────
-   1) Define the scroll-timeline at the top level (not nested in “*”)
-─────────────────────────────────────────────────────────────────────────── */
-@scroll-timeline
-  --projTimeline selector(.projects-section) start("0% 100%") end("100% 0%");
-
-@keyframes projectReveal {
-  0% {
-    opacity: 0;
-    clip-path: inset(100% 0 0 0); /* hidden from top */
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);     /* fully visible */
-    transform: translateY(0);
-  }
+.swipe-arrow {
+  margin-right: 5px;
+  display: inline-block;
+  animation: swipePulse 1.5s infinite;
+  font-size: 28px;
+  opacity: 0.7;
 }
 
+@keyframes swipePulse {
+  0% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(-5px); opacity: 1; }
+  100% { transform: translateX(0); opacity: 0.5; }
+}
 /* ───────────────────────────────────────────────────────────────────────────
    Reset + Global
 ─────────────────────────────────────────────────────────────────────────── */
@@ -34,24 +28,30 @@ html, body {
   scroll-behavior: smooth;
 }
 
-/* Overlay Base */
+/* ───────────────────────────────────────────────────────────────────────────
+   Navigation Bar
+─────────────────────────────────────────────────────────────────────────── */
+/* Overlay */
 .nav-overlay {
   position: fixed;
   top: 30%;
   right: 0;
-  width: 180px; /* invisible bar width */
+  width: 180px; 
   height: auto;
-  pointer-events: none; /* allow hovering through unless active */
+  pointer-events: none;
   z-index: 1000;
-  transition: all 0.1s ease;
 }
+
+/* Overlay -> alt */
 .nav-overlay.nav-alt {
   transition: all 0.1s ease;
   width: 80px;
 }
-.nav-overlay.nav-alt .nav-links-minimal {
+
+/* Frosted glass BG -> alt */
+.nav-overlay.nav-alt .nav-ul-container {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
   border-radius: 20px;
   padding: 1rem 2rem;
   margin-right: 20px;
@@ -76,6 +76,8 @@ html, body {
     color 0.1s ease;
   pointer-events: none;
 }
+
+/* Menu-label -> alt */
 .nav-label.menu-alt {
   right: 30px;
   font-size: 20px;
@@ -84,8 +86,8 @@ html, body {
     opacity 0.4s ease,
 }
 
-/* List items */
-.nav-links-minimal {
+/* UL container */
+.nav-ul-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -94,30 +96,29 @@ html, body {
   transition: opacity 0.5s ease;
   pointer-events: none;
 }
-.nav-links-minimal.items-alt li a {
+.nav-ul-container.items-alt li a {
   font-size: 30px;
   padding: 4px;
   transition: all 0.5s ease;
 }
 
-/* Individual items */
-.nav-links-minimal li {
+/* List items */
+.nav-ul-container li {
   list-style: none;
 }
-.nav-links-minimal li a {
-  color: #fff;
+.nav-ul-container li a {
   text-decoration: none;
+  color: rgb(255, 255, 255);
   font-size: 1rem;
-  padding: 6px 12px;
   background: transparent;
   font-size: 30px;
 }
 
 /* Hover items */
-.nav-links-minimal li a:hover {
+.nav-ul-container li a:hover {
   color: #dda50b;
 }
-.nav-links-minimal.items-alt li a:hover {
+.nav-ul-container.items-alt li a:hover {
   font-size: 40px;
   transition: all 0.3s ease;
 }
@@ -168,6 +169,10 @@ html, body {
 /* ───────────────────────────────────────────────────────────────────────────
    About (unchanged)
 ─────────────────────────────────────────────────────────────────────────── */
+.about {
+  height: 100%;
+  width: 100%;
+}
 .about-content {
   height: 100vh;
   width: 100%;
@@ -274,13 +279,12 @@ html, body {
   object-fit: cover;           /* keep aspect‐ratio and cover the area */
   display: block;
 }
+
 /* ───────────────────────────────────────────────────────────────────────────
    Timeline
 ─────────────────────────────────────────────────────────────────────────── */
-/* src/components/Timeline.css */
-
 /* 1) Section wrapper */
-.timeline-section {
+.timeline {
   height: 100%;
   width: 100%;
 }
@@ -507,7 +511,7 @@ html, body {
 /* ───────────────────────────────────────────────────────────────────────────
    Media Queries (unchanged)
 ─────────────────────────────────────────────────────────────────────────── */
-@media (max-width: 1500px) {
+@media (max-width: 1440px) {
   .hero-title {
     font-size: 20vw;
     padding: 25vh 0vw 0vh 2vw;
@@ -519,7 +523,7 @@ html, body {
     padding: 20vh 0 10vh 0;
   }
 }
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .hero-title {
     font-size: 20vw;
     padding: 18vh 0vw 0vh 2vw;
@@ -585,5 +589,18 @@ html, body {
     transform: translateY(200px);
     opacity: 0;
     transition: transform 1s ease-out, opacity 1s ease-out;
+  }
+  .nav-label.menu-alt {
+    right: 10px;
+    font-size: 20px;
+    padding: 1px 6px; 
+  }
+  .swipe-area {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 30%; /* or just 80px if you want a thin swipeable zone */
+  z-index: 999; 
   }
 }

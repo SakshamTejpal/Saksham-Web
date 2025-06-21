@@ -1,11 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { House, UserCircle, CalendarBlank, Wrench, EnvelopeSimple } from 'phosphor-react';
+import { useSwipeable } from "react-swipeable";
 
 function Navbar() {
   const [active, setActive] = useState(false);
-  const [isBeyondIntro, setIsBeyondIntro] = useState(false); // scroll-based section check
+  const [isBeyondIntro, setIsBeyondIntro] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
+  const navRef = useRef(null);
 
-  // Scroll observer
+  // Detect screen width
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 500);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Swipeable handlers (only active on mobile)
+  const handlers = useSwipeable({
+    onSwipedLeft: () => setActive(true),
+    onSwipedRight: () => setActive(false),
+    delta: 20,
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+    trackMouse: false
+  });
+
+  // Click outside to close (mobile only)
+  useEffect(() => {
+    if (!isMobile) return;
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        setActive(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [isMobile]);
+
+  // Scroll observer (always active)
   useEffect(() => {
     const sections = [
       document.getElementById("hero"),
@@ -17,13 +49,10 @@ function Navbar() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio);
         if (visible.length > 0) {
           const topSection = visible[0].target.id;
-          const isIntro = topSection === "hero" ;
+          const isIntro = topSection === "hero";
           setIsBeyondIntro(!isIntro);
         }
       },
@@ -34,68 +63,51 @@ function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Mouse position listener
+  // Mouse hover trigger (desktop only)
   useEffect(() => {
+    if (isMobile) return;
     const handleMouseMove = (e) => {
       const fromRight = window.innerWidth - e.clientX;
       const triggerDistance = isBeyondIntro ? 100 : 200;
       setActive(fromRight < triggerDistance);
     };
-
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [isBeyondIntro]);
+  }, [isBeyondIntro, isMobile]);
+
+  const handleMobileToggle = () => {
+    if (isMobile) setActive(!active);
+  };
+
+  const showIcons = isMobile || isBeyondIntro;
 
   return (
-<nav className={`nav-overlay ${isBeyondIntro ? "nav-alt" : ""}`}>
-  {/* Label — text in intro, icon in deeper sections */}
-  <div
-    className={`nav-label ${active ? "fade-out" : "fade-in"} ${isBeyondIntro ? "menu-alt" : ""}`}
-  >
-    {isBeyondIntro ? "☰" : "Menu"}
-  </div>
+    <div {...(isMobile ? handlers : {})} className="swipe-area">
+      <nav ref={navRef} className={`nav-overlay ${showIcons ? "nav-alt" : ""}`}>
+        <div
+          className={`nav-label ${active ? "fade-out" : "fade-in"} ${showIcons ? "menu-alt" : ""}`}
+          onClick={handleMobileToggle}
+          style={{ cursor: isMobile ? 'pointer' : 'default' }}
+        >
+          {(isMobile && !isBeyondIntro) ? (
+            <>
+              <span className="swipe-arrow">««« </span> ⋮
+              {/* <span className="swipe-arrow">&lt;&lt;&lt; </span> ⋮ */}
+            </>
+          ) : (
+            isMobile ? "⋮" : (isBeyondIntro ? "☰" : "Menu")
+          )}
+        </div>
 
-  {/* Nav items — text or icons based on section */}
-  <ul className={`nav-links-minimal ${active ? "fade-in" : "fade-out"} ${isBeyondIntro ? "items-alt" : ""}`}>
-    {isBeyondIntro ? (
-      <>
-        <li>
-          <a href="#hero">
-            <House size={30} />
-          </a>
-        </li>
-        <li>
-          <a href="#about">
-            <UserCircle size={30} />
-          </a>
-        </li>
-        <li>
-          <a href="#timeline">
-            <CalendarBlank size={30} />
-          </a>
-        </li>
-        {/* <li>
-          <a href="#projects">
-            <Wrench size={30} />
-          </a>
-        </li> */}
-        <li>
-          <a href="#contact">
-            <EnvelopeSimple size={30} />
-          </a>
-        </li>
-      </>
-    ) : (
-      <>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#timeline">Timeline</a></li>
-        {/* <li><a href="#projects">Projects</a></li> */}
-        <li><a href="#contact">Contact</a></li>
-      </>
-    )}
-  </ul>
-</nav>
+        <ul className={`nav-ul-container ${active ? "fade-in" : "fade-out"} ${showIcons ? "items-alt" : ""}`}>
+          <li><a href="#hero">{showIcons ? <House size={30} /> : "Home"}</a></li>
+          <li><a href="#about">{showIcons ? <UserCircle size={30} /> : "About"}</a></li>
+          <li><a href="#timeline">{showIcons ? <CalendarBlank size={30} /> : "Timeline"}</a></li>
+          <li><a href="#projects">{showIcons ? <Wrench size={30} /> : "Projects"}</a></li>
+          <li><a href="#contact">{showIcons ? <EnvelopeSimple size={30} /> : "Contact"}</a></li>
+        </ul>
+      </nav>
+    </div>
   );
 }
 

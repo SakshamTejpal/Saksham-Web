@@ -8,7 +8,7 @@ function About() {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: "10px",
+      rootMargin: "50px",
       threshold: 0.3, // when 30% of the section is visible
     };
 

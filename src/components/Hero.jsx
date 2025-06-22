@@ -6,8 +6,8 @@ function Hero() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const fadeStart = 50; // when scrollY = 60, opacity = 1
-      const fadeEnd = 50; // when scrollY >= 350, opacity = 0
+      const fadeStart = 45; // when scrollY = 60, opacity = 1
+      const fadeEnd = 500; // when scrollY >= 500, opacity = 0
       const y = window.scrollY;
       let newOpacity = 1;
 
@@ -18,7 +18,6 @@ function Hero() {
       } else {
         newOpacity = 1 - (y - fadeStart) / (fadeEnd - fadeStart);
       }
-
       setBgOpacity(newOpacity);
     };
 

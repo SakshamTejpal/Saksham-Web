@@ -1,5 +1,6 @@
 // src/components/Timeline.jsx
 import React, { useEffect, useRef } from "react";
+import useIsMobile from "../hooks/screensize";
 
 const timelineData = [
   // {
@@ -61,6 +62,7 @@ export default function Timeline() {
   const lastScrollY = useRef(window.scrollY);
   // +1 = scrolling down, -1 = scrolling up (initially assume down)
   const scrollDir = useRef(1);
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     // 1) Listen to scroll events to update scrollDir.current
@@ -127,9 +129,11 @@ export default function Timeline() {
   return (
     <section className="timeline" id="timeline">
       <h1 className="timeline-title">Over the years</h1>
-      <div className="timeline-container" ref={containerRef}>
+      {/* <div className="timeline-container" ref={containerRef}> */}
+      <div className={`timeline-container ${isMobile ? "mobile" : ""}`} ref={containerRef}>
+
         {timelineData.map((item, index) => {
-          const side = index % 2 === 0 ? "left" : "right";
+          const side = isMobile ? "right" : (index % 2 === 0 ? "left" : "right");
           return (
             <div
               key={index}

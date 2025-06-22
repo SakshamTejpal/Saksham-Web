@@ -1,19 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { House, UserCircle, CalendarBlank, Wrench, EnvelopeSimple } from 'phosphor-react';
 import { useSwipeable } from "react-swipeable";
+import useIsMobile from "../hooks/screensize.js";
+
 
 function Navbar() {
   const [active, setActive] = useState(false);
   const [isBeyondIntro, setIsBeyondIntro] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 500);
   const navRef = useRef(null);
-
-  // Detect screen width
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 500);
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useIsMobile()
 
   // Swipeable handlers (only active on mobile)
   const handlers = useSwipeable({

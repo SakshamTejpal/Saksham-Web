@@ -13,7 +13,6 @@ background-image:
 background-size: cover;
 background-repeat: no-repeat;
 background-position: center center;
-background-attachment: fixed;
 
   scroll-behavior: smooth;
 }
@@ -723,8 +722,4 @@ background-attachment: fixed;
 
   /* 1) Ensure the container lays out children in column order */
 
-
-
-
-  
 }

@@ -1,6 +1,7 @@
 // src/components/Timeline.jsx
 import React, { useEffect, useRef } from "react";
 import useIsMobile from "../hooks/screensize";
+import "../styles/Timeline.css"; // Ensure you have the correct path to your CSS file
 
 const timelineData = [
   // {

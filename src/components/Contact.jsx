@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import emailjs from '@emailjs/browser';
 import { GithubLogo, InstagramLogo, LinkedinLogo } from 'phosphor-react';
-
+import "../styles/Contact.css"; // Ensure you have the correct path to your CSS file
 
 function Contact() {
   const [name, setName] = useState("");

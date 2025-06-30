@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import profilePic from "../assets/IMG_4087-1.JPEG";
+import "../styles/About.css"; 
 
 function About() {
   const containerRef = useRef(null);

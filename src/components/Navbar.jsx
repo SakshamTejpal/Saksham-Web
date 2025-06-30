@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { House, UserCircle, CalendarBlank, Wrench, EnvelopeSimple } from 'phosphor-react';
 import { useSwipeable } from "react-swipeable";
 import useIsMobile from "../hooks/screensize.js";
+import "../styles/Navbar.css"; // Ensure you have the correct path to your CSS file
 
 
 function Navbar() {

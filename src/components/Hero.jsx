@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Clock from "./time";
+import "../styles/Hero.css";
 
 function Hero() {
   const [bgOpacity, setBgOpacity] = useState(1);

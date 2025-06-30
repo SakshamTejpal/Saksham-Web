@@ -1,0 +1,65 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Projects
+─────────────────────────────────────────────────────────────────────────── */
+.projects-section {
+  height: 100vh;               
+  display: flex;
+  flex-direction: column;
+}
+.projects-title {
+  position: sticky;
+  top: 0;    /* you had this omitted—add top:0 so it stays pinned */
+  z-index: 10;
+  font-size: 10vw;
+  text-align: right;
+  padding: 15px 40px 0px;
+  font-weight: 400;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+.projects-content {
+  flex: 1 1 auto;
+  overflow-y: auto; /* you can keep this if you want the inner UL to scroll */
+  margin: 0;
+  padding: 200px 0 0 0;
+  list-style: none;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.projects-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+.project-item {
+  scroll-snap-align: start; 
+  height: 100%;              /* each item is one “page” */    
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+
+  /* (A) by default, hide everything until the scroll timeline triggers */
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+  transform: translateY(20px);
+
+  /* (B) attach our scroll-driven keyframes */
+  animation-name: projectReveal;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-timeline: --projTimeline 0; /* “0” = first (and only) entry of @scroll-timeline */
+}
+
+.project-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  padding-right: 200px;
+}
+.project-image {
+  width: auto;                 
+  height: 100%;                /* fill the <li>’s height */
+  object-fit: cover;           /* keep aspect‐ratio and cover the area */
+  display: block;
+}

@@ -6,11 +6,13 @@ import About from './components/About';
 import Timeline from './components/Timeline.jsx';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
+import CustomCursor from './components/Cursor.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
   return (
     <div>
+      <CustomCursor />
       <Navbar />
       <Hero />
       <About />

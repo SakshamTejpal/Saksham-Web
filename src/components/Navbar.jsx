@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { House, UserCircle, CalendarBlank, Wrench, EnvelopeSimple } from 'phosphor-react';
+import { CiHome,CiLaptop,CiUser,CiCalendar,CiMail    } from "react-icons/ci";
+import { PiHouseSimpleLight, PiUserLight, PiCalendarBlankLight, PiDesktopLight, PiEnvelopeSimpleLight } from "react-icons/pi";
+
 import { useSwipeable } from "react-swipeable";
 import useIsMobile from "../hooks/screensize.js";
+import "../styles/Navbar.css"; 
 
 
 function Navbar() {
@@ -81,12 +84,12 @@ function Navbar() {
       <nav ref={navRef} className={`nav-overlay ${showIcons ? "nav-alt" : ""}`}>
         <div
           className={`nav-label ${active ? "fade-out" : "fade-in"} ${showIcons ? "menu-alt" : ""}`}
-          onClick={handleMobileToggle}
+          // onClick={handleMobileToggle}
           style={{ cursor: isMobile ? 'pointer' : 'default' }}
         >
           {(isMobile && !isBeyondIntro) ? (
             <>
-              <span className="swipe-arrow">««« </span> ⋮
+              <span className="swipe-arrow">««« </span>
               {/* <span className="swipe-arrow">&lt;&lt;&lt; </span> ⋮ */}
             </>
           ) : (
@@ -95,11 +98,11 @@ function Navbar() {
         </div>
 
         <ul className={`nav-ul-container ${active ? "fade-in" : "fade-out"} ${showIcons ? "items-alt" : ""}`}>
-          <li><a href="#hero">{showIcons ? <House size={30} /> : "Home"}</a></li>
-          <li><a href="#about">{showIcons ? <UserCircle size={30} /> : "About"}</a></li>
-          <li><a href="#timeline">{showIcons ? <CalendarBlank size={30} /> : "Timeline"}</a></li>
+          <li><a href="#hero">{showIcons ? <PiHouseSimpleLight size={30} /> : "Home"}</a></li>
+          <li><a href="#about">{showIcons ? <PiUserLight size={30} /> : "About"}</a></li>
+          <li><a href="#timeline">{showIcons ? <PiCalendarBlankLight size={30} /> : "Timeline"}</a></li>
           {/* <li><a href="#projects">{showIcons ? <Wrench size={30} /> : "Projects"}</a></li> */}
-          <li><a href="#contact">{showIcons ? <EnvelopeSimple size={30} /> : "Contact"}</a></li>
+          <li><a href="#contact">{showIcons ? <PiEnvelopeSimpleLight size={30} /> : "Contact"}</a></li>
         </ul>
       </nav>
     </div>

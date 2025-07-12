@@ -41,6 +41,7 @@ function About() {
         />
         <div className={`about-text ${isVisible ? "visible" : ""}`}>
           <p>
+            <p>
             I’m a <span className="about-highlight">Software Developer</span> passionate about solving
             logical problems and creating unique solutions. I’m currently pursuing
             <span className="about-highlight"> Bachelor's of Computer Science</span> specializing in
@@ -62,6 +63,7 @@ function About() {
             When I’m not coding, you’ll find me <span className="about-highlight">kickboxing</span>, playing
             <span className="about-highlight"> basketball</span>, or discovering new
             <span className="about-highlight"> cafés</span> and <span className="about-highlight">bars</span> around Toronto.
+          </p>
           </p>
           <br />
         </div>

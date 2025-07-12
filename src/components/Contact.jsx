@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import emailjs from '@emailjs/browser';
 import { GithubLogo, InstagramLogo, LinkedinLogo } from 'phosphor-react';
+import { CiHome,CiLaptop,CiUser,CiCalendar,CiMail    } from "react-icons/ci";
+import { PiGithubLogoLight, PiLinkedinLogoLight, PiInstagramLogoLight } from "react-icons/pi";
 
 
 function Contact() {
@@ -42,7 +44,7 @@ function Contact() {
     rel="noopener noreferrer"
     aria-label="GitHub"
   >
-    <GithubLogo size={36} color="currentColor" />
+    <PiGithubLogoLight size={36} />
   </a>
   <a
     href="https://www.instagram.com/saksham.tejpal_/"
@@ -50,7 +52,7 @@ function Contact() {
     rel="noopener noreferrer"
     aria-label="Instagram"
   >
-    <InstagramLogo size={36} color="currentColor" />
+    <PiInstagramLogoLight size={36} color="currentColor" />
   </a>
   <a
     href="https://www.linkedin.com/in/saksham-tejpal-654b88116/"
@@ -58,7 +60,7 @@ function Contact() {
     rel="noopener noreferrer"
     aria-label="LinkedIn"
   >
-    <LinkedinLogo size={36} color="currentColor" />
+    <PiLinkedinLogoLight size={36} color="currentColor" />
   </a>
 </div>
 

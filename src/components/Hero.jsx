@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Clock from "./time";
+import Clock from "./TimeLocation";
+import "../styles/Hero.css"; // Ensure you have the correct path to your CSS file
 
 function Hero() {
   const [bgOpacity, setBgOpacity] = useState(1);
@@ -27,11 +28,10 @@ function Hero() {
 
   return (
     <section className="hero" id="hero">
-      {/* Background layer: full‐width/height, absolutely positioned, controlled by bgOpacity */}
       <div
         className="hero-background"
         style={{
-          backgroundColor: `rgba(32, 32, 32, ${bgOpacity})`,
+          backgroundColor: `rgba(30, 30, 30, ${bgOpacity})`,
         }}
       ></div>
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Clock from "./TimeLocation";
 import "../styles/Hero.css"; // Ensure you have the correct path to your CSS file
+import HeroBg from "./HeroBG";
+
 
 function Hero() {
   const [bgOpacity, setBgOpacity] = useState(1);
@@ -27,13 +29,9 @@ function Hero() {
   }, []);
 
   return (
-    <section className="hero" id="hero">
-      <div
-        className="hero-background"
-        style={{
-          backgroundColor: `rgba(30, 30, 30, ${bgOpacity})`,
-        }}
-      ></div>
+    <section id="hero" style={{ position: "relative", overflow: "hidden" }}>
+      {/* your new background component */}
+      <HeroBg opacity={bgOpacity} />
 
       {/* Foreground content: position relative so it sits on top and is never transparent */}
       <div className="hero-content">

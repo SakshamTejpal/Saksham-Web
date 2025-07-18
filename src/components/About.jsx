@@ -1,46 +1,18 @@
 import { useRef, useState, useEffect } from "react";
-import profilePic from "../assets/IMG_4087-1.JPEG";
+import profilePic from "../assets/profile.JPEG";
+import "../styles/About.css";
 
 function About() {
-  const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "50px",
-      threshold: 0.3, // when 30% of the section is visible
-    };
-
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        setIsVisible(entry.isIntersecting);
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-      observer.disconnect();
-    };
-  }, []);
 
   return (
     <section className="about" id="about">
-      <div ref={containerRef} className="about-content">
+      <div className="about-content">
         <img
           src={profilePic}
           alt="Saksham Tejpal"
-          className={`profile-image ${isVisible ? "visible" : ""}`}
+          className="profile-image"
         />
-        <div className={`about-text ${isVisible ? "visible" : ""}`}>
-          <p>
+          <article className="about-text">
             <p>
             I’m a <span className="about-highlight">Software Developer</span> passionate about solving
             logical problems and creating unique solutions. I’m currently pursuing
@@ -64,10 +36,9 @@ function About() {
             <span className="about-highlight"> basketball</span>, or discovering new
             <span className="about-highlight"> cafés</span> and <span className="about-highlight">bars</span> around Toronto.
           </p>
-          </p>
           <br />
+        </article>
         </div>
-      </div>
     </section>
   );
 }

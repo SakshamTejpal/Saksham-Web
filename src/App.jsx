@@ -6,21 +6,21 @@ import About from './components/About';
 import Timeline from './components/Timeline.jsx';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import CustomCursor from './components/Cursor.jsx';
+import CustomCursor from './components/support/Cursor.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
   return (
-    <div>
-      <CustomCursor />
+    <div className="main-container">
+      {/* <CustomCursor /> */}
       <Navbar />
       <Hero />
       <About />
       <Timeline />
       <Contact />
-      <footer className="footer">
+      {/* <footer className="footer">
         <p>© 2025 Saksham Tejpal. All rights reserved.</p>        
-      </footer>
+      </footer> */}
     </div>
   )
 }

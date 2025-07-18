@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { CiHome,CiLaptop,CiUser,CiCalendar,CiMail    } from "react-icons/ci";
 import { PiHouseSimpleLight, PiUserLight, PiCalendarBlankLight, PiDesktopLight, PiEnvelopeSimpleLight } from "react-icons/pi";
-
 import { useSwipeable } from "react-swipeable";
 import useIsMobile from "../hooks/screensize.js";
 import "../styles/Navbar.css"; 

@@ -1,0 +1,165 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Timeline
+─────────────────────────────────────────────────────────────────────────── */
+.timeline {
+  height: 100%;
+  width: 100%;
+}
+.timeline-content {
+  height: 100%;
+  /* border: 2px solid #dda50b; */
+    margin-top: 5rem;
+}
+.timeline-title {
+  text-align: right;
+  padding-right: 80px;
+}
+
+.timeline-container {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  padding: 10px 0 0 0;
+}
+
+/* 4) Central spine: we use scaleY (not height) so we can flip origin easily */
+/*    Default state: collapsed (scaleY(0)), origin at top (so if someone inadvertently leaves an origin set, it won't show) */
+.timeline-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: transform 1s ease-out;
+}
+
+/* 4a) Scrolling down into section: animate-down → grow from top→bottom */
+.timeline-container.animate-down::before {
+  transform-origin: top;
+  transform: translateX(-50%) scaleY(1);
+}
+
+/* 4b) Scrolling up into section (from below): animate-up → grow from bottom→top */
+.timeline-container.animate-up::before {
+  transform-origin: bottom;
+  transform: translateX(-50%) scaleY(1);
+}
+
+/* When animate-down/animate-up classes are removed, it transitions back to scaleY(0). */
+
+/* 5) Each timeline item starts hidden & shifted down */
+.timeline-item {
+  position: relative;
+  width: 50%;
+  padding: 1rem 0;
+  box-sizing: border-box;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* 5a) When .in-view is added on enter, fade in & slide up */
+.timeline-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 6) Position left/right halves */
+.timeline-item.left {
+  left: 0;
+  /* text-align: right; ← uncomment if you want left‐side text right‐aligned */
+}
+.timeline-item.right {
+  left: 50%;
+  /* text-align: left; ← default */
+}
+
+/* 7) Dot positioning (always on the 50% spine) */
+.timeline-dot {
+  position: absolute;
+  top: 1rem;
+  width: 15px;
+  height: 15px;
+  background-color: #dda50b;
+  border: 2px solid black;
+  border-radius: 100%;
+}
+
+.timeline-item.left .timeline-dot {
+  left: 100%;
+  transform: translateX(-50%);
+}
+.timeline-item.right .timeline-dot {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+/* 8) Content padding so text doesn't touch the center line */
+.timeline-content-box {
+  padding: 0 2rem;
+}
+
+/* 9a) Year label */
+.timeline-year {
+  display: block;
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.25rem;
+}
+
+/* 9b) Event title */
+.timeline-event-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+/* 9c) Description */
+.timeline-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 500px) {
+
+  .timeline-content {
+    margin-top: 50px;
+  padding-top: 50px;
+}
+  /* 1) Make sure each item is full-width and at left:0 */
+  .timeline-container .timeline-item {
+    width: 100% !important;
+    left: 0 !important;
+    padding-bottom: 20px;
+  }
+  .timeline-container {
+    left: 10px;
+    width: 100% !important;
+  }
+  /* 2) Move the spine (pseudo-element) to 20px */
+  .timeline-container::before {
+    left: 26px !important;
+    transform: translateX(0) !important;
+  }
+
+  /* 3) Pin every dot dead-center on that 20px line */
+  .timeline-container .timeline-dot {
+    left: 20px !important;
+    transform: translateX(0) !important;
+  }
+
+  /* 4) Push your content over so it sits right of the dot */
+  .timeline-container .timeline-content-box {
+    padding-left: 2rem !important;
+  }
+    .timeline-container .timeline-content-box {
+    padding-left: 3rem !important;
+  }
+}

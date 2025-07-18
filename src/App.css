@@ -16,7 +16,8 @@ background-position: center center;
 
 scroll-behavior: smooth;
 
-cursor: none;
+
+/* cursor: none;
 
 a, button {
   cursor: none !important;
@@ -31,8 +32,27 @@ select,
 input:focus,
 textarea:focus,
 [contenteditable]:focus {
-  caret-color: rgba(255, 255, 255); /* solid white caret */
+  caret-color: rgba(255, 255, 255); 
+} */
 }
+
+h2 {
+  font-size: 8vw;
+  padding-bottom: 50px;
+}
+
+h4{
+  transform: translateY(-50%);
+  font-size: 30px;
+  font-weight: 300;
+    transition: 
+    opacity 0.4s ease,
+    right 0.1s ease,
+    font-size 0.1s ease,
+    letter-spacing 0.1s ease,
+    writing-mode 0.1s ease,
+    color 0.1s ease;
+  pointer-events: none;
 }
 
 
@@ -40,53 +60,7 @@ textarea:focus,
 
 
 
-/* ───────────────────────────────────────────────────────────────────────────
-   About (unchanged)
-─────────────────────────────────────────────────────────────────────────── */
-.about {
-  height: 100%;
-  width: 100%;
-}
-.about-content {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4rem;
-  /* Add padding to left and right sides */
-  padding: 4rem 2rem;
-}
-.about-highlight {
-  color: #dda50b; /* Highlight color */
-}
-.profile-image {
-  border-radius: 999px;
-  width: 18vw;
-  height: 30vw;
-  transform: translateY(-150px);
-  opacity: 0;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-  object-fit: cover;
-  padding: 0 10px 0px;
-  border: 7px solid rgba(255, 255, 255, 0.7);
-}
-.profile-image.visible {
-  transform: translateY(0);
-  opacity: 1;
-}
-.about-text {
-  max-width: 700px; 
-  text-align: left;
-  padding: 1rem;
-  transform: translateY(150px);
-  opacity: 0;
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-}
-.about-text.visible {
-  transform: translateY(0);
-  opacity: 1;
-}
+
 
 /* ───────────────────────────────────────────────────────────────────────────
    Projects
@@ -154,232 +128,10 @@ textarea:focus,
   display: block;
 }
 
-/* ───────────────────────────────────────────────────────────────────────────
-   Timeline
-─────────────────────────────────────────────────────────────────────────── */
-/* 1) Section wrapper */
-.timeline {
-  height: 100%;
-  width: 100%;
-  padding-bottom: 50px ;
-}
-
-/* 2) Section title */
-.timeline-title {
-  font-size: 8vw;
-  text-align: right;
-  margin-top: 0;
-  padding: 0 80px 80px 0;
-}
-
-/* 3) Timeline container + (hidden) central spine */
-.timeline-container {
-  position: relative;
-  width: 90%;
-  margin: 0 auto;
-  padding: 10px 0 0 0;
-}
-
-/* 4) Central spine: we use scaleY (not height) so we can flip origin easily */
-/*    Default state: collapsed (scaleY(0)), origin at top (so if someone inadvertently leaves an origin set, it won't show) */
-.timeline-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) scaleY(0);
-  transform-origin: top;
-  width: 2px;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.7);
-  transition: transform 1s ease-out;
-}
-
-/* 4a) Scrolling down into section: animate-down → grow from top→bottom */
-.timeline-container.animate-down::before {
-  transform-origin: top;
-  transform: translateX(-50%) scaleY(1);
-}
-
-/* 4b) Scrolling up into section (from below): animate-up → grow from bottom→top */
-.timeline-container.animate-up::before {
-  transform-origin: bottom;
-  transform: translateX(-50%) scaleY(1);
-}
-
-/* When animate-down/animate-up classes are removed, it transitions back to scaleY(0). */
-
-/* 5) Each timeline item starts hidden & shifted down */
-.timeline-item {
-  position: relative;
-  width: 50%;
-  padding: 1rem 0;
-  box-sizing: border-box;
-
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-/* 5a) When .in-view is added on enter, fade in & slide up */
-.timeline-item.in-view {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* 6) Position left/right halves */
-.timeline-item.left {
-  left: 0;
-  /* text-align: right; ← uncomment if you want left‐side text right‐aligned */
-}
-.timeline-item.right {
-  left: 50%;
-  /* text-align: left; ← default */
-}
-
-/* 7) Dot positioning (always on the 50% spine) */
-.timeline-dot {
-  position: absolute;
-  top: 1rem;
-  width: 15px;
-  height: 15px;
-  background-color: #dda50b;
-  border: 2px solid black;
-  border-radius: 100%;
-}
-
-.timeline-item.left .timeline-dot {
-  left: 100%;
-  transform: translateX(-50%);
-}
-.timeline-item.right .timeline-dot {
-  left: 0;
-  transform: translateX(-50%);
-}
-
-/* 8) Content padding so text doesn't touch the center line */
-.timeline-content {
-  padding: 0 2rem;
-}
-
-/* 9a) Year label */
-.timeline-year {
-  display: block;
-  font-size: 1rem;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 0.25rem;
-}
-
-/* 9b) Event title */
-.timeline-event-title {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-bottom: 0.5rem;
-}
-
-/* 9c) Description */
-.timeline-description {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.9);
-}
 
 
-/* ───────────────────────────────────────────────────────────────────────────
-   Contact (unchanged)
-─────────────────────────────────────────────────────────────────────────── */
-.contact{
-  height: 100vh;
-  width: 100%;  
-}
-.contact-content {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.contact-title {
-  font-size: 8vw;
-  text-align: left;
-  padding-left: 80px;
-}
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;               
-  width: 50vw;
-  padding: 50px 140px 0 0;     
-  align-self: flex-end;    
-}
-.contact-form input,
-.contact-form textarea {
-  background: transparent;    
-  border: none;               
-  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
-  padding: 0.5rem 0;          
-  font-size: 1.5rem;
-  outline: none;              
-  transition: border-bottom-color 0.2s; 
-}
-.contact-form textarea {
-  resize: none;  
-  min-height: 150px;
-}
-.contact-form input:hover,
-.contact-form textarea:hover,
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-bottom-color: #dda50b;
-}
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-  font-size: 1rem;
-  font-weight: 300;
-  transition: font-size 0.2s;
-}
-.contact-form textarea::placeholder {
-  text-align: center;
 
-}
-.contact-form input:hover::placeholder,
-.contact-form textarea:hover::placeholder,
-.contact-form input:focus::placeholder,
-.contact-form textarea:focus::placeholder {
-  font-size: 1.5rem;
-}
-.contact-form button {
-  background: none;             
-  border: 2px solid rgba(255, 255, 255, 0.7);       
-  padding: 0;
-  font-size: 1rem;
-  cursor: pointer;
-  align-self: center;       
-  transition: background-color 0.2s ease, color 0.2s ease;
-  width: 20vw;
-}
-.contact-form button:hover {
-  background: #242424;
-  color: rgba(255, 255, 255);
-}
-.contact-icons {
-  position: absolute;
-  top: 50%;
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  font-size: 2rem;
-  padding-top: 0px;
-  padding-left: 250px;
-}
-.contact-icons a {
-  transition: transform 0.2s, filter 0.2s;
-  display: inline-block;
-  color: rgba(255, 255, 255);
-}
-.contact-icons a:hover {
-  transform: scale(1.15);
-  color: #dda50b; /* Set the icon color on hover */
-}
+
 
 /* ───────────────────────────────────────────────────────────────────────────
    Media Queries (unchanged)
@@ -407,7 +159,7 @@ textarea:focus,
   .hero-wrapper {
     padding: 20vh 0 10vh 0;
   }
-  .about-content {
+  /* .about-content {
     flex-direction: column;
     justify-content: flex-start;
     height: 100vh;
@@ -429,145 +181,16 @@ textarea:focus,
     transform: translateY(200px);
     opacity: 0;
     transition: transform 1s ease-out, opacity 1s ease-out;
-  }
+  } */
 }
 @media (max-width: 500px) {
 
-  .about{
-    padding-bottom: 10vh;
-  }
-  .about-content{
-    gap: 1rem;
-    flex-direction: column;
-  }
-  .about-content .about-text {
-    padding : 0px;
-    font-size: 10px;
-  }
-  .about-content .about-text p {
-    font-size: 18px !important;
-  }
-  .about-highlight{
-    font-size: 18px !important;
-  }
-  .profile-image {
-    /* 1) Drop any global caps */
-    max-width: none !important;
-    max-height: none !important;
-
-    /* 2) Force a tall box (80% of viewport height) */
-    height: 25vh !important;
-
-    /* 3) Let width be auto but constrain it to a 1:3 ratio */
-    aspect-ratio: 1 / 1.5;
-    width: auto !important;
-
-    /* 4) Fully round the ends */
-    border-radius: 9999px !important;
-
-    /* 5) Fill the box without distortion */
-    object-fit: cover;
-    display: block;
-  }
-
-  .timeline-title {
-    font-size: 8vw;
-    text-align: center;
+  h2{
+    font-size: 10vw;
+    text-align: center; 
     margin-top: 0;
-    padding: 0 0px 50px 0;
-  }
-  /* 1) Make sure each item is full-width and at left:0 */
-  .timeline-container .timeline-item {
-    width: 100% !important;
-    left: 0 !important;
-    padding-bottom: 20px;
-  }
-  .timeline-container {
-    left: 10px
-  }
-  /* 2) Move the spine (pseudo-element) to 20px */
-  .timeline-container::before {
-    left: 26px !important;
-    transform: translateX(0) !important;
+    padding: 0px 0px 20px 0px;
   }
 
-  /* 3) Pin every dot dead-center on that 20px line */
-  .timeline-container .timeline-dot {
-    left: 20px !important;
-    transform: translateX(0) !important;
-  }
-
-  /* 4) Push your content over so it sits right of the dot */
-  .timeline-container .timeline-content {
-    padding-left: 2rem !important;
-  }
-    .timeline-container .timeline-content {
-    padding-left: 3rem !important;
-  }
-
-  .contact{
-  height: 100vh;
-  width: 100%;  
-}
-.contact-content {
-  padding-top: 80px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-.contact-title {
-  font-size: 8vw;
-  text-align: center;
-  padding-left: 0;
-}
-
-  .contact-form {
-    max-width: 100%;
-    width: 100%;
-    margin: 0 auto;
-    padding: 3rem;  
-    padding-top: 60px;    /* reduce padding */
-    gap: 2rem;          /* less vertical space */
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    font-size: 1rem;    /* keep text legible */
-    padding: 0.5rem 0;  /* reduce inner padding */
-  }
-
-  .contact-form textarea {
-    min-height: 120px;  /* ensure enough room for text */
-  }
-
-  .contact-form button {
-    width: 100%;           /* full‐width tap target */
-    padding: 0.75rem;      /* balanced padding */
-    font-size: 1rem;       /* readable on small screens */
-    align-self: center;    /* center the button */
-  }
-
-    /* Move icons below the form and center them */
-  .contact-icons {
-    /* reset any desktop offsets */
-    position: static !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    /* ensure it’s in the correct order */
-    order: 2 !important;
-
-    /* make it a full-width flex container */
-    display: flex !important;
-    width: 100% !important;
-    /* center the icons */
-    justify-content: center !important;
-    align-items: center !important;
-    /* optional breathing room above */
-    margin: 1rem auto 0 !important;
-    gap: 1.5rem; /* your icon spacing */
-  }
-    .contact-content > .contact-icons {
-    justify-content: center !important;
-  }
 
 }

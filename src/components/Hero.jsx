@@ -41,8 +41,8 @@ function Hero() {
         <div className="hero-content">
           {isMobile ? (
             <>
-              <h3 className="hero-title-comb">Hello! <br /> I am</h3>
-              <h1 className="hero-title-comb">Saksham Tejpal</h1>            </>
+              <h1 className="hero-title-comb">Hello! <br /> I am <br />Saksham Tejpal</h1>
+            </>
           ) : (
             <>
               <h3 className="hero-subtitle">Hello, I am</h3>

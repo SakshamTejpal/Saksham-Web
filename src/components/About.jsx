@@ -1,11 +1,35 @@
 import { useRef, useState, useEffect } from "react";
 import profilePic from "../assets/profile.JPEG";
 import "../styles/About.css";
+import useIsMobile from "../hooks/screensize";
 
 function About() {
+  const aboutRef = useRef(null);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    const section = aboutRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            section.classList.add("about-in-view");
+            section.classList.remove("about-out-view");
+          } else {
+            section.classList.remove("about-in-view");
+            section.classList.add("about-out-view");
+          }
+        });
+      },
+      { threshold: isMobile ? 0.2 : 0.3 }
+    );
+
+    if (section) observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="about" id="about">
+    <section className="about about-out-view" ref={aboutRef}>
       <div className="about-content">
         <img
           src={profilePic}

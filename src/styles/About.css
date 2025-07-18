@@ -9,49 +9,73 @@
   height: 100%;
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   gap: 2rem;
   padding: 5rem;
   margin-top: 5rem;
   /* border: #dda50b 1px solid;  */
 }
 .about-highlight {
-  color: #dda50b; /* Highlight color */
+  color: #dda50b; 
 }
 .profile-image {
-  /* border-radius: 999px; */
   width: 50%;
   height: 70vh;
   object-fit: cover;
   padding: 0px 80px 0px 80px;
   filter: brightness(70%);
-  /* align-items: left; */
   /* border: 5px solid rgba(255, 255, 255); */
 }
 .about-text {
   width: 50%; 
-  /* text-align: left; */
 }
+.profile-image,
+.about-text {
+  opacity: 0;
+  transition: opacity 1s ease, transform 0.5s ease;
+}
+/* When About is in view */
+.about.about-in-view .profile-image,
+.about.about-in-view .about-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* Reset when out of view */
+.about.about-out-view .profile-image {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+.about.about-out-view .about-text {
+  opacity: 0;
+  transform: translateX(50px);
+}
+
+/* Start positions (offscreen) */
+/* .profile-image {
+  transform: translateX(-50px);
+}
+.about-text {
+  transform: translateX(50px);
+} */
+
 
 @media (max-width: 500px) {
     
   .about{
     padding : 0px;
-
-    /* border: 2px solid #dda50b; */
     height: 100%;
+    /* border: 2px solid #dda50b; */
   }
   .about-content{
     flex-direction: column;
     padding: 0px;
+    margin-top: 0px;
     /* border: 2px solid #dd120b; */
   }
   .about-text {
-    padding: 0px;
     padding: 10px;
     padding-top: 0px;
     padding-inline: 40px;
-    width : 100% !important;
+    width: 100% !important;
     font-size: 20px;
     /* border: 2px solid #dd120b; */
   }
@@ -61,7 +85,7 @@
   .about-highlight {
     font-size: 20px !important;
   }
-.profile-image {
+  .profile-image {
     height: 40vh;
     width: 100%;
     object-fit: cover;
@@ -69,7 +93,19 @@
     padding: 0px;
     padding-top: 80px;
     filter: brightness(100%);
-    /* fade bottom of image into background */
-    mask-image:         linear-gradient(to bottom, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%);
-}
+    mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%);
+  }
+
+  .about.about-in-view .profile-image,
+  .about.about-in-view .about-text,
+  .about.about-out-view .profile-image,
+  .about.about-out-view .about-text {
+    transform: none !important;
+  }
+
+  .about.about-in-view .profile-image,
+  .about.about-out-view .profile-image {
+    transform: none !important;
+    opacity: 1 !important;
+  }
 }

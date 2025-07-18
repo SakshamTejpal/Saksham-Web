@@ -102,7 +102,12 @@ function Contact() {
           <div className="form-button">
             <button type="submit" style={{ fontSize: "1.25rem", padding: "0.75rem 2rem" }}>
               <span className="contact-button-text">
-                {isMobile ? "Send" : "›"}
+                {
+                  isMobile ? "Send" : 
+                    <>›
+                    {/* <br/>Send */}
+                    </>
+                } 
               </span>
             </button>
           </div>

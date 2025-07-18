@@ -92,7 +92,7 @@ function Navbar() {
             </>
           ) : (
             isMobile ? "⋮" : (isBeyondIntro ? "☰" : "Menu")
-          )}
+            )}
         </div>
 
         <ul className={`nav-ul-container ${active ? "fade-in" : "fade-out"} ${showIcons ? "items-alt" : ""}`}>

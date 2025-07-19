@@ -11,13 +11,11 @@
   pointer-events: none;
   z-index: 1000;
 }
-
 /* Overlay -> alt */
 .nav-overlay.nav-alt {
   transition: all 0.1s ease;
   width: 80px;
 }
-
 /* Frosted glass BG -> alt */
 .nav-overlay.nav-alt .nav-ul-container {
   background: rgba(20, 20, 20, 0.3);
@@ -27,7 +25,6 @@
   margin-right: 20px;
   transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
 }
-
 /* Menu-label */
 .nav-label {
   position: absolute;

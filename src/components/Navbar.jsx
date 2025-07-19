@@ -12,7 +12,7 @@ function Navbar() {
   const isMobile = useIsMobile()
 
   // Swipeable handlers (only active on mobile)
-  const handlers = useSwipeable({
+  const swipeHandlers = useSwipeable({
     onSwipedLeft: () => setActive(true),
     onSwipedRight: () => setActive(false),
     delta: 20,
@@ -75,10 +75,11 @@ function Navbar() {
     if (isMobile) setActive(!active);
   };
 
-  const showIcons = isMobile || isBeyondIntro;
+  const showIcons = isMobile 
+  // || isBeyondIntro;
 
   return (
-    <div {...(isMobile ? handlers : {})} className="swipe-area">
+    <div {...(isMobile ? swipeHandlers : {})} className="swipe-area">
       <nav ref={navRef} className={`nav-overlay ${showIcons ? "nav-alt" : ""}`}>
         <div
           className={`nav-label ${active ? "fade-out" : "fade-in"} ${showIcons ? "menu-alt" : ""}`}

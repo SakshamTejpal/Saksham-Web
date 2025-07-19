@@ -18,9 +18,9 @@ function App() {
       <About />
       <Timeline />
       <Contact />
-      {/* <footer className="footer">
+      <footer className="footer">
         <p>© 2025 Saksham Tejpal. All rights reserved.</p>        
-      </footer> */}
+      </footer>
     </div>
   )
 }

@@ -77,7 +77,7 @@ function Contact() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              style={{ fontSize: "1.25rem", padding: "0.5rem"}}
+              style={{  padding: "0.5rem"}}
             />
             <input
               className="pill"
@@ -87,7 +87,7 @@ function Contact() {
               value={emailInput}
               onChange={(e) => setEmailInput(e.target.value)}
               required
-              style={{ fontSize: "1.25rem", padding: "0.5rem" }}
+              style={{  padding: "0.5rem" }}
             />
             <textarea
               id="message"
@@ -96,7 +96,6 @@ function Contact() {
               onChange={(e) => setMessage(e.target.value)}
               rows={5}
               required
-              style={{ fontSize: "1.25rem" }}
             />
           </div>
           <div className="form-button">

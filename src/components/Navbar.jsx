@@ -38,7 +38,7 @@ function Navbar() {
       ([entry]) => {
         const ratio = entry.intersectionRatio;
 
-        const threshold = 0.8; // Adjust this as your X/Y value (80% visible)
+        const threshold = (isMobile ? 0.3 : 0.8); // Adjust this as your X/Y value (80% visible)
 
         if (scrollDirection === "down" && ratio < threshold) {
           setBeyondHero(true);

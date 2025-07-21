@@ -49,14 +49,6 @@
   transform: translateX(50px);
 }
 
-/* Start positions (offscreen) */
-/* .profile-image {
-  transform: translateX(-50px);
-}
-.about-text {
-  transform: translateX(50px);
-} */
-
 
 @media (max-width: 500px) {
     
@@ -87,7 +79,7 @@
     height: 40vh;
     width: 100%;
     object-fit: cover;
-    margin-top: 50px;
+    margin-top: 0px;
     padding: 0px;
     padding-top: 80px;
     filter: brightness(100%);

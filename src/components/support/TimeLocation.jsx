@@ -19,7 +19,8 @@ export default function Clock() {
       })
       .catch((err) => {
         console.error(err);
-        setCity(`Error: ${err.message}`);
+        // setCity(`Error: ${err.message}`);
+        setCity(``);
       });
   }, []);
 
@@ -29,15 +30,14 @@ export default function Clock() {
     second: "2-digit",
   });
 
-  const locationDisplay = city ? (
-    city
-  ) : (
+  const locationDisplay = city 
+  ? (city) : (
     <span style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
       <GlobeSimple size={24} weight="regular" color="white" />
       Locating…
     </span>
   );
-
+  
   return (
     <div className="clock-location">
       <div className="clock-time">{timeString}</div>

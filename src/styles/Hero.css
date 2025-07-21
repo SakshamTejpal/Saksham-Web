@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 .hero-content {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   position: relative;
   /* padding: [top] [right] [bottom] [left]; */
@@ -35,6 +35,7 @@
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  /* border: 2px solid #dda50b; */
 }
 
 @media (max-width: 500px) {

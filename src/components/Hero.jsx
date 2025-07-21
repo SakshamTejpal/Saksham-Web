@@ -46,7 +46,7 @@ function Hero() {
           ) : (
             <>
               <h3 className="hero-subtitle">Hello, I am</h3>
-              <h1 className="hero-title">Saksham Tejpal</h1>
+              <h1 className="hero-title" id="hero-title">Saksham Tejpal</h1>
             </>
           )}
         </div>

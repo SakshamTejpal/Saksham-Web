@@ -29,7 +29,7 @@ function About() {
   }, []);
 
   return (
-    <section className="about about-out-view" ref={aboutRef}>
+    <section className="about about-out-view" id="about" ref={aboutRef}>
       <div className="about-content">
         <img
           src={profilePic}

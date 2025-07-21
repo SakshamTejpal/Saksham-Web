@@ -113,6 +113,9 @@
     width: 50%;
     z-index: 999;
   }
+  .nav-item a {
+  font-size: 16px;
+  }
   .nav-trigger.trigger-compact {
     right: 10px;
     font-size: 20px;

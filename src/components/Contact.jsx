@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import emailjs from '@emailjs/browser';
-import { GithubLogo, InstagramLogo, LinkedinLogo } from 'phosphor-react';
-import { CiHome,CiLaptop,CiUser,CiCalendar,CiMail    } from "react-icons/ci";
 import { PiGithubLogoLight, PiLinkedinLogoLight, PiInstagramLogoLight } from "react-icons/pi";
 import '../styles/Contact.css';
 import useIsMobile from "../hooks/screensize.js";
@@ -47,7 +45,7 @@ function Contact() {
             rel="noopener noreferrer"
             aria-label="GitHub"
           >
-            {isMobile ? <PiGithubLogoLight size={40} /> : <h4>GitHub</h4>}
+            {isMobile ? <PiGithubLogoLight size={35} /> : <h4>GitHub</h4>}
           </a>
           <a
             href="https://www.instagram.com/saksham.tejpal_/"
@@ -55,7 +53,7 @@ function Contact() {
             rel="noopener noreferrer"
             aria-label="Instagram"
           >
-            {isMobile ? <PiInstagramLogoLight size={40} color="currentColor" /> : <h4>Instagram</h4>}
+            {isMobile ? <PiInstagramLogoLight size={35} color="currentColor" /> : <h4>Instagram</h4>}
           </a>
           <a
             href="https://www.linkedin.com/in/saksham-tejpal-654b88116/"
@@ -63,7 +61,7 @@ function Contact() {
             rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
-            {isMobile ? <PiLinkedinLogoLight size={40} color="currentColor" /> : <h4>LinkedIn</h4>}
+            {isMobile ? <PiLinkedinLogoLight size={35} color="currentColor" /> : <h4>LinkedIn</h4>}
           </a>
         </div>
 

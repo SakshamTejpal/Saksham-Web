@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Clock from "./support/TimeLocation";
 import "../styles/Hero.css"; 
 import useIsMobile from "../hooks/screensize.js";
-import HeroBg from "./support/HeroBG";
 
 
 function Hero() {

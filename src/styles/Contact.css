@@ -4,10 +4,11 @@
 .contact{
   height: 100vh;
   width: 100%;  
+  /* border: 2px solid rgba(255, 255, 255, 0.7); */
 }
 .contact-content {
   height: 100%;
-  margin-top: 8rem;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
   /* border: 2px solid #dda50b; */
@@ -15,6 +16,7 @@
 .contact-title {
   text-align: left;
   padding-left: 80px;
+  /* border: 2px solid rgba(255, 255, 255, 0.7); */
 }
 .contact-form {
   display: flex;
@@ -133,7 +135,7 @@
 
     .contact-content {
       margin-top: 0px;
-      padding: 100px 10px 0px 10px;
+      padding: 80px 10px 0px 10px;
     }
     .contact-title {
       text-align: center !important;
@@ -154,6 +156,7 @@
       padding-inline: 10px;
       /* border: 2px solid rgba(255, 255, 255, 0.7); */
       max-height: 350px !important; 
+      width: 100% !important;
     }
    .contact-form input,
    .contact-form textarea {
@@ -177,10 +180,11 @@
     }
     .form-button{
       padding-top: 0px !important;
+      justify-content: center;
     }
    .form-button button{
       align-items: center;
-      width: 100%;
+      width: 90%;
       height: 50px !important ;
     }
     .contact-button-text {

@@ -6,20 +6,19 @@ import About from './components/About';
 import Timeline from './components/Timeline.jsx';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import CustomCursor from './components/support/Cursor.jsx';
 
 function App() {
   const [count, setCount] = useState(0)
   return (
     <div className="main-container">
-      {/* <CustomCursor /> */}
       <Navbar />
       <Hero />
       <About />
+      <Projects />
       <Timeline />
       <Contact />
       <footer className="footer">
-        <p>© 2025 Saksham Tejpal. All rights reserved.</p>        
+        <p>© 2025 Saksham Tejpal</p>        
       </footer>
     </div>
   )

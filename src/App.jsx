@@ -14,7 +14,7 @@ function App() {
       <Navbar />
       <Hero />
       <About />
-      <Projects />
+      {/* <Projects /> */}
       <Timeline />
       <Contact />
       <footer className="footer">

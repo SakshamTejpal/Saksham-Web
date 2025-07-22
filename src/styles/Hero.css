@@ -1,0 +1,59 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Hero
+─────────────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 100vh;
+  z-index: 1;
+  flex-direction: column;
+}
+.hero-content {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  /* padding: [top] [right] [bottom] [left]; */
+  padding: 45vh 0 5vh 0;
+  overflow: hidden;
+  /* border: 1px solid red; */
+}
+.hero-subtitle {
+  font-size: 4vw;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+  padding: 10px 0 0 120px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+.hero-title {
+  font-size: 15vw;
+  line-height: 1;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0 0 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  /* border: 2px solid #dda50b; */
+}
+
+@media (max-width: 500px) {
+  .hero{
+    height: 100%;
+  }
+  .hero-title-comb {
+    font-size: 23vw;
+    line-height: 1.2;
+    text-align: left;
+    padding: 0 0 0 15px;
+  }
+  .hero-content {
+    font-size: 20px;
+  }
+  .hero-content {
+    padding-top: 25vh;
+    padding-left: 0px;
+    /* border: 2px solid #dda50b; */
+  }
+}

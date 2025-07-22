@@ -1,46 +1,43 @@
 import { useRef, useState, useEffect } from "react";
-import profilePic from "../assets/IMG_4087-1.JPEG";
+import profilePic from "../assets/profile.JPEG";
+import "../styles/About.css";
+import useIsMobile from "../hooks/screensize";
 
 function About() {
-  const containerRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const aboutRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "50px",
-      threshold: 0.3, // when 30% of the section is visible
-    };
+    const section = aboutRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            section.classList.add("about-in-view");
+            section.classList.remove("about-out-view");
+          } else {
+            section.classList.remove("about-in-view");
+            section.classList.add("about-out-view");
+          }
+        });
+      },
+      { threshold: isMobile ? 0.2 : 0.3 }
+    );
 
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        setIsVisible(entry.isIntersecting);
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
-      }
-      observer.disconnect();
-    };
+    if (section) observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="about" id="about">
-      <div ref={containerRef} className="about-content">
+    <section className="about about-out-view" id="about" ref={aboutRef}>
+      <div className="about-content">
         <img
           src={profilePic}
           alt="Saksham Tejpal"
-          className={`profile-image ${isVisible ? "visible" : ""}`}
+          className="profile-image"
         />
-        <div className={`about-text ${isVisible ? "visible" : ""}`}>
-          <p>
+          <article className="about-text">
+            <p>
             I’m a <span className="about-highlight">Software Developer</span> passionate about solving
             logical problems and creating unique solutions. I’m currently pursuing
             <span className="about-highlight"> Bachelor's of Computer Science</span> specializing in
@@ -64,8 +61,8 @@ function About() {
             <span className="about-highlight"> cafés</span> and <span className="about-highlight">bars</span> around Toronto.
           </p>
           <br />
+        </article>
         </div>
-      </div>
     </section>
   );
 }

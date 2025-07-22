@@ -10,14 +10,15 @@ import Contact from './components/Contact';
 function App() {
   const [count, setCount] = useState(0)
   return (
-    <div>
+    <div className="main-container">
       <Navbar />
       <Hero />
       <About />
+      {/* <Projects /> */}
       <Timeline />
       <Contact />
       <footer className="footer">
-        <p>© 2025 Saksham Tejpal. All rights reserved.</p>        
+        <p>© 2025 Saksham Tejpal</p>        
       </footer>
     </div>
   )

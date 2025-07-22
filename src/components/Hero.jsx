@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
-import Clock from "./time";
+import Clock from "./support/TimeLocation";
+import "../styles/Hero.css"; 
+import useIsMobile from "../hooks/screensize.js";
+
 
 function Hero() {
   const [bgOpacity, setBgOpacity] = useState(1);
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const handleScroll = () => {
-      const fadeStart = 45; // when scrollY = 60, opacity = 1
-      const fadeEnd = 500; // when scrollY >= 500, opacity = 0
+      const Start = 45; // when scrollY = 60, opacity = 1
+      const End = 500; // when scrollY >= 500, opacity = 0
       const y = window.scrollY;
       let newOpacity = 1;
 
-      if (y <= fadeStart) {
+      if (y <= Start) {
         newOpacity = 1;
-      } else if (y >= fadeEnd) {
+      } else if (y >= End) {
         newOpacity = 0;
       } else {
-        newOpacity = 1 - (y - fadeStart) / (fadeEnd - fadeStart);
+        newOpacity = 1 - (y - Start) / (End - Start);
       }
       setBgOpacity(newOpacity);
     };
@@ -26,24 +30,25 @@ function Hero() {
   }, []);
 
   return (
-    <section className="hero" id="hero">
-      {/* Background layer: full‐width/height, absolutely positioned, controlled by bgOpacity */}
-      <div
-        className="hero-background"
-        style={{
-          backgroundColor: `rgba(32, 32, 32, ${bgOpacity})`,
-        }}
-      ></div>
+    <section id="hero" >
+      {/* your new background component */}
 
       {/* Foreground content: position relative so it sits on top and is never transparent */}
-      <div className="hero-content">
         <div className="hero-clock">
           <Clock />
         </div>
-        <div className="hero-wrapper">
-          <h1 className="hero-title">{""}Hello{"!"} <br /> I am <br /> Saksham</h1>
+        <div className="hero-content">
+          {isMobile ? (
+            <>
+              <h1 className="hero-title-comb">Hello! <br /> I am <br />Saksham Tejpal</h1>
+            </>
+          ) : (
+            <>
+              <h3 className="hero-subtitle">Hello, I am</h3>
+              <h1 className="hero-title" id="hero-title">Saksham Tejpal</h1>
+            </>
+          )}
         </div>
-      </div>
     </section>
   )
 }

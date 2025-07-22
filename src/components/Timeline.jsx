@@ -1,6 +1,7 @@
 // src/components/Timeline.jsx
 import React, { useEffect, useRef } from "react";
 import useIsMobile from "../hooks/screensize";
+import "../styles/Timeline.css"; 
 
 const timelineData = [
   // {
@@ -128,7 +129,8 @@ export default function Timeline() {
 
   return (
     <section className="timeline" id="timeline">
-      <h1 className="timeline-title">Over the years</h1>
+      <div className="timeline-content">
+      <h2 className="timeline-title">Over the years</h2>
       {/* <div className="timeline-container" ref={containerRef}> */}
       <div className={`timeline-container ${isMobile ? "mobile" : ""}`} ref={containerRef}>
 
@@ -141,7 +143,7 @@ export default function Timeline() {
               ref={(el) => (itemsRef.current[index] = el)}
             >
               <div className="timeline-dot" />
-              <div className="timeline-content">
+              <div className="timeline-content-box">
                 <span className="timeline-year">{item.year}</span>
                 <h3 className="timeline-event-title">{item.title}</h3>
                 <span className="timeline-year">{item.place}</span>
@@ -150,6 +152,7 @@ export default function Timeline() {
             </div>
           );
         })}
+      </div>
       </div>
     </section>
   );

@@ -37,7 +37,7 @@ function Contact() {
   return (
     <section className="contact" id="contact">
       <div className="contact-content">
-        <h2 className="contact-title">Connect with me</h2>
+        <h2 className="contact-title">Lets Connect</h2>
         <div className="contact-links">
           <a
             href="https://github.com/SakshamTejpal"

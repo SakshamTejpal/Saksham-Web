@@ -7,8 +7,8 @@
 }
 .timeline-content {
   height: 100%;
+  margin-top: 0px;
   /* border: 2px solid #dda50b; */
-    margin-top: 5rem;
 }
 .timeline-title {
   text-align: right;

@@ -16,6 +16,7 @@ background-position: center center;
 
 scroll-behavior: smooth;
 
+overflow-x: hidden !important;
 
 /* cursor: none;
 
@@ -34,6 +35,11 @@ textarea:focus,
 [contenteditable]:focus {
   caret-color: rgba(255, 255, 255); 
 } */
+}
+/* make sure no stylesheet rule can override your inline lock */
+
+body.modal-open .navbar {
+  display: none !important;
 }
 
 .footer {
@@ -68,7 +74,6 @@ h4{
    Media Queries (unchanged)
 ─────────────────────────────────────────────────────────────────────────── */
 @media (max-width: 500px) {
-
   h2{
     font-size: 8vw;
     text-align: center !important; 

@@ -8,7 +8,7 @@
 }
 .contact-content {
   height: 100%;
-  margin-top: 120px;
+  margin-top: 0px;
   display: flex;
   flex-direction: column;
   /* border: 2px solid #dda50b; */

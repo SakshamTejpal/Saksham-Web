@@ -1,109 +1,182 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import "../styles/Projects.css";
+import projects from "../data/projects.json";
 
-function Projects() {
-  const sectionRef = useRef(null);
-  const listRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollLocked = useRef(false);
+gsap.registerPlugin(ScrollTrigger);
 
+export default function Projects() {
+  const sectionRef   = useRef(null);
+  const containerRef = useRef(null);
+  const [modalProject, setModalProject] = useState(null);
+
+  // Lock background scroll when modal is open
   useEffect(() => {
-    const sectionEl = sectionRef.current;
-    const listEl = listRef.current;
-    if (!sectionEl || !listEl) return;
-
-    // Grab all the <li class="project-item"> inside the <ul>
-    const items = Array.from(listEl.querySelectorAll(".project-item"));
-
-    // 1) IntersectionObserver logic (fade in/out as before):
-    const observerOptions = {
-      root: null, 
-      rootMargin: "100px",
-      threshold: 0.5, // Trigger when 50% of the item is visible
+    const lock = modalProject !== null;
+    document.body.classList.toggle("modal-open", lock);
+    document.body.style.overflow            = lock ? "hidden" : "";
+    document.documentElement.style.overflow = lock ? "hidden" : "";
+    return () => {
+      document.body.classList.remove("modal-open");
+      document.body.style.overflow            = "";
+      document.documentElement.style.overflow = "";
     };
-    const observerCallback = (entries) => {
-      entries.forEach((entry) => {
-        const el = entry.target;
-        if (entry.isIntersecting) el.classList.add("visible");
-        else el.classList.remove("visible");
+  }, [modalProject]);
+
+  // Refs for sequencing the fade-in/out
+  const modalRef   = useRef(null);
+  const bgRef      = useRef(null);
+  const contentRef = useRef(null);
+
+  // Open animation: fade in backdrop, then content
+  useEffect(() => {
+    if (!modalProject) return;
+
+    // start both hidden
+    gsap.set([bgRef.current, contentRef.current], { autoAlpha: 0, y: 30 });
+
+    const tl = gsap.timeline();
+    tl
+      .to(bgRef.current, {
+        autoAlpha: 1,
+        duration: 0.3,
+      })
+      .to(contentRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out",
       });
-    };
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    items.forEach((item) => observer.observe(item));
 
-    // 2) Wheel handler with “scroll up to previous section” if at index 0:
-    const onWheel = (e) => {
-      e.preventDefault(); // disable native scrolling inside this section
+    return () => tl.kill();
+  }, [modalProject]);
 
-      if (scrollLocked.current) return;
-      scrollLocked.current = true;
+  // Close animation: fade out content, then backdrop, then unmount
+  const handleClose = () => {
+    const tl = gsap.timeline({
+      onComplete: () => setModalProject(null),
+    });
+    tl
+      .to(contentRef.current, {
+        autoAlpha: 0,
+        y: 30,
+        duration: 0.3,
+        ease: "power2.in",
+      })
+      .to(bgRef.current, {
+        autoAlpha: 0,
+        duration: 0.2,
+      });
+  };
 
-      const direction = e.deltaY > 0 ? 1 : -1;
-      let nextIndex = currentIndex + direction;
+  // Horizontal scroll + pin
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const section   = sectionRef.current;
+    if (!container || !section) return;
 
-      if (direction < 0 && currentIndex === 0) {
-        // We're on the first item and scrolling up: go to previous section.
-        const prevSection = sectionEl.previousElementSibling;
-        if (prevSection) {
-          prevSection.scrollIntoView({ behavior: "smooth" });
-        }
-      } else if (direction > 0 && currentIndex === items.length - 1) {
-        // (Optional) If you also wanted to scroll down to the next section
-        // when on the last item, you could do:
-        // const nextSection = sectionEl.nextElementSibling;
-        // if (nextSection) nextSection.scrollIntoView({ behavior: "smooth" });
-      } else {
-        // Normal “within‐projects” navigation:
-        if (nextIndex < 0) nextIndex = 0;
-        if (nextIndex > items.length - 1) nextIndex = items.length - 1;
-
-        if (nextIndex !== currentIndex) {
-          setCurrentIndex(nextIndex);
-          items[nextIndex].scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }
-
-      // Unlock after the scroll animation (~700ms)
-      setTimeout(() => {
-        scrollLocked.current = false;
-      }, 700);
-    };
-
-    sectionEl.addEventListener("wheel", onWheel, { passive: false });
+    gsap.to(container, {
+      x: () => -(container.scrollWidth - section.getBoundingClientRect().width),
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top+=10 top",
+        end: () =>
+          "+=" +
+          (container.scrollWidth -
+            section.getBoundingClientRect().width +
+            parseInt(getComputedStyle(container).paddingLeft)),
+        pin: true,
+        scrub: 0,
+        anticipatePin: 1,
+      },
+    });
 
     return () => {
-      items.forEach((item) => observer.unobserve(item));
-      observer.disconnect();
-      sectionEl.removeEventListener("wheel", onWheel);
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [currentIndex]);
+  }, []);
 
   return (
-    <section className="projects-section" ref={sectionRef}>
-      <h1 className="projects-title">Projects</h1>
-      <ul className="projects-content" ref={listRef}>
-        <li className="project-item">
-          <p className="project-info">My React Weather App</p>
-          <img
-            className="project-image"
-            src=""
-            alt="My React Weather App"
-          />
-        </li>
-        <li className="project-item">
-          <p className="project-info">Todo List with Firebase</p>
-          <img
-            className="project-image"
-            src=""
-            alt="Todo List with Firebase"
-          />
-        </li>
-        {/* …add more items as needed */}
-      </ul>
+    <section className="projects" ref={sectionRef} id="projects">
+      <div className="projects-content">
+        <h2 className="projects-title">Projects</h2>
+        <div className="projects-container" ref={containerRef}>
+          <div style={{ width: "60px", height: "100%" }} />
+          {projects.map((project, idx) => (
+            <div
+              className="project-card"
+              key={idx}
+              tabIndex={0}
+              onClick={() => setModalProject(project)}
+              onKeyDown={(e) =>
+                (e.key === "Enter" || e.key === " ") && setModalProject(project)
+              }
+            >
+              <img
+                className="project-img"
+                src={`assets/Projects/${project.title}.jpg`}
+                alt={project.title}
+              />
+              <div className="project-head">{project.title}</div>
+            </div>
+          ))}
+          <div style={{ minWidth: "60px", height: "100%" }} />
+        </div>
+
+        {modalProject && (
+          <div
+            className="project-modal"
+            ref={modalRef}
+            onClick={handleClose}
+            style={{ pointerEvents: "auto" }}
+          >
+<div className="project-modal-bg" ref={bgRef}></div>
+
+            <button
+              className="modal-close"
+              onClick={e => {
+                e.stopPropagation();
+                handleClose();
+              }}
+            >
+              &times;
+            </button>
+
+            <div
+              className="project-modal-content"
+              ref={contentRef}
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="modal-titlebar">
+                <h4 className="modal-head">{modalProject.title}</h4>
+              </div>
+
+              <div className="modal-body">
+                <img
+                  className="modal-img"
+                  src={`assets/Projects/${modalProject.title}.jpg`}
+                  alt={modalProject.title}
+                />
+                <div className="modal-details">
+                  <div className="modal-info">
+                    {modalProject.description}
+                  </div>
+                  <div className="modal-stack">
+                    {modalProject.techStack.split(",").map((tech, idx) => (
+                      <span className="tech-badge" key={idx}>
+                        {tech.trim()}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
 
-export default Projects;

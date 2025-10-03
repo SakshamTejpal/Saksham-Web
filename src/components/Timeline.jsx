@@ -132,7 +132,7 @@ export default function Timeline() {
       <div className="timeline-content">
       <h2 className="timeline-title">Over the years</h2>
       {/* <div className="timeline-container" ref={containerRef}> */}
-      <div className={`timeline-container ${isMobile ? "mobile" : ""}`} ref={containerRef}>
+      <div className="timeline-container" ref={containerRef}>
 
         {timelineData.map((item, index) => {
           const side = isMobile ? "right" : (index % 2 === 0 ? "left" : "right");
@@ -142,6 +142,7 @@ export default function Timeline() {
               className={`timeline-item ${side}`}
               ref={(el) => (itemsRef.current[index] = el)}
             >
+              {/* {!isMobile &&  */}
               <div className="timeline-dot" />
               <div className="timeline-content-box">
                 <span className="timeline-year">{item.year}</span>

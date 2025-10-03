@@ -126,7 +126,11 @@
 }
 
 @media (max-width: 500px) {
-  
+
+  .timeline-dot {
+    height: 12px;
+    width: 12px;
+  }
   .timeline-content {
     margin-top: 0px;
     padding: 100px 10px 0 10px;
@@ -141,26 +145,26 @@
     padding-bottom: 20px;
   }
   .timeline-container {
-    left: 10px;
+    /* left: 0px; */
     width: 100% !important;
   }
   /* 2) Move the spine (pseudo-element) to 20px */
   .timeline-container::before {
-    left: 26px !important;
+    /* display: none !important;  */
+    left: 19px !important;
     transform: translateX(0) !important;
+    width: 1px;
+    top: 50px;
+    height: 90%;
   }
-
   /* 3) Pin every dot dead-center on that 20px line */
   .timeline-container .timeline-dot {
-    left: 20px !important;
+    left: 15px !important;
+    top: 50px;
     transform: translateX(0) !important;
   }
-
   /* 4) Push your content over so it sits right of the dot */
   .timeline-container .timeline-content-box {
-    padding-left: 2rem !important;
-  }
-    .timeline-container .timeline-content-box {
-    padding-left: 3rem !important;
+    /* padding-left: 3rem !important; */
   }
 }

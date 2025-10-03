@@ -142,8 +142,8 @@ export default function Timeline() {
               className={`timeline-item ${side}`}
               ref={(el) => (itemsRef.current[index] = el)}
             >
-              {/* {!isMobile &&  */}
-              <div className="timeline-dot" />
+              {!isMobile && 
+              <div className="timeline-dot" />}
               <div className="timeline-content-box">
                 <span className="timeline-year">{item.year}</span>
                 <h3 className="timeline-event-title">{item.title}</h3>

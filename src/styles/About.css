@@ -84,6 +84,7 @@
     padding-top: 80px;
     filter: brightness(100%);
     mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%);
+    transform: scale(0.3); /* zoom level — tweak as needed */
   }
 
   .about.about-in-view .profile-image,

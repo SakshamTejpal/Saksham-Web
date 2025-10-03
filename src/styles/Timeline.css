@@ -150,12 +150,12 @@
   }
   /* 2) Move the spine (pseudo-element) to 20px */
   .timeline-container::before {
-    /* display: none !important;  */
-    left: 19px !important;
+    display: none !important; 
+    /* left: 19px !important;
     transform: translateX(0) !important;
     width: 1px;
     top: 50px;
-    height: 90%;
+    height: 90%; */
   }
   /* 3) Pin every dot dead-center on that 20px line */
   .timeline-container .timeline-dot {

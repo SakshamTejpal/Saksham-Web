@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   PiHouseSimpleLight,
   PiUserLight,
+  PiFolderSimpleLight,
   PiCalendarBlankLight,
   PiEnvelopeSimpleLight,
 } from "react-icons/pi";
@@ -115,6 +116,7 @@ useEffect(() => {
   const navItems = [
     { id: "hero", text: "Home", icon: <PiHouseSimpleLight size={30} /> },
     { id: "about", text: "About", icon: <PiUserLight size={30} /> },
+    { id: "projects", text: "Projects", icon: <PiFolderSimpleLight size={30} /> },
     { id: "timeline", text: "Timeline", icon: <PiCalendarBlankLight size={30} /> },
     { id: "contact", text: "Contact", icon: <PiEnvelopeSimpleLight size={30} /> },
   ];

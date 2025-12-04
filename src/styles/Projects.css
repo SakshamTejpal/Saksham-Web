@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /* ───────────────────────────────────────────────────────────────────────────
    Projects
 ─────────────────────────────────────────────────────────────────────────── */
@@ -174,3 +175,277 @@
 
 
 
+=======
+/* ───────────────────────────────────────────────
+   Projects Layout
+─────────────────────────────────────────────── */
+
+.projects {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 80px;
+  /* border: 2px solid rgba(255,255,255,0.1); */
+}
+
+.projects-content {
+  width: 100%;
+  padding: 0 80px;
+}
+
+.projects-title {
+  text-align: left;
+  padding-bottom: 40px;
+}
+
+.projects-container {
+  display: flex;
+  gap: 0px;
+  height: 100%;
+  padding: 0px 0px;
+  /* border: 2px solid rgba(255,255,255,0.1); */
+}
+
+/* ───────────────────────────────────────────────
+   LEFT SIDE LIST
+─────────────────────────────────────────────── */
+
+.projects-list-container {
+  width: 60%;
+  height: 70vh;
+  display: flex;
+  /* align-items: center; */
+  padding-right: 0px;
+  padding-left: 10px;
+  /* border: 2px solid rgba(255,255,255,0.1); */
+}
+
+.projects-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 8vw;
+  text-align: left;
+  
+}
+
+.project-item {
+  font-size: 30px;
+  padding: 16px 0;
+  cursor: pointer;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.project-item:hover {
+  color: #dda50b;
+  /* padding-left: 12px; */
+}
+
+.project-item.active {
+  color: #dda50b;
+  padding-left: 12px;
+}
+
+.vertical {
+     border-left: 1px solid rgba(255,255,255,0.2);
+     height: 70%;
+     position: absolute;
+     left: 55%;
+     
+}
+/* ───────────────────────────────────────────────
+   RIGHT SIDE PROJECT INFO
+─────────────────────────────────────────────── */
+
+.projects-info {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+  height: 70vh; 
+  flex: 1;
+  padding-top: 5vh;
+  padding-left: 50px;
+  padding-right: 90px;
+  /* border: 2px solid rgba(255,255,255,0.1); */
+  /* border-left: 1px solid rgba(255,255,255,0.2); */
+}
+
+.project-info-title {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.project-info-description {
+  margin-bottom: 25px;
+  line-height: 1.6;
+color: rgba(255, 255, 255, 0.6);
+
+}
+
+/* Tech badges */
+.project-tech {
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+  align-items: center;
+  color: #dda50b;
+
+}
+
+.project-tech-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* Buttons */
+.project-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.project-btn {
+  padding: 10px 20px;
+  border: 1px solid rgba(255,255,255,0.9);
+  text-decoration: none;
+  color: white;
+  transition: background 0.25s, color 0.25s, border 0.25s;
+}
+
+.project-btn:hover {
+  background: #dda50b;
+  color: black;
+  border-color: #dda50b;
+}
+
+/* ───────────────────────────────────────────────
+   MOBILE
+─────────────────────────────────────────────── */
+
+.project-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  padding-top: 20px;
+  z-index: 999;
+}
+
+.project-popup-content {
+  width: 100%;
+  max-height: 80vh;
+  padding: 30px 20px;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+
+/* Close button */
+.popup-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+}
+
+
+@media (max-width: 500px) {
+  .projects {
+      /* border: 2px solid rgba(255,255,255,0.1); */
+      min-height: unset !important;
+}
+  .projects-content {
+    padding:0px;
+    /* border: 2px solid rgba(255,255,255,0.1); */
+  }
+  .projects-container {
+    flex-direction: column;
+    /* border: 2px solid rgba(255,255,255,0.1); */
+  }
+
+  .projects-list-container {
+    width: 100%;
+    justify-content: center;
+    /* border: 2px solid rgba(255,255,255,0.1); */
+  }
+
+  .projects-list {
+    padding: unset !important;
+    margin-inline: 10px;
+    text-align: center;
+    /* border: 2px solid rgba(255,255,255,0.1); */
+  }
+
+  .project-item {
+    font-size: 25px;
+  }
+
+  .projects-info {
+    border-left: none;
+    padding-bottom: 0px;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+
+  .project-info-title {
+    font-size: 1.8rem;
+  }
+  .project-item.active {
+  color: #dda50b;
+  padding-left: 0px;
+}
+}
+
+.fadein {
+  opacity: 0;
+  animation: fadeIn 0.8s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.projects-info .fadein {
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* make content expand horizontally */
+}
+.project-links {
+  display: flex;
+  gap: 2rem;
+  margin-top: 20px;
+}
+
+.project-link-text {
+  font-size: 25px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.project-link-text:hover {
+  color: #dda50b;
+  cursor: pointer;
+}
+
+@media (min-width: 1600px) {
+.projects-container {
+  padding: 0px 120px;
+  /* border: 2px solid rgba(255,255,255,0.1); */
+}
+
+}
+>>>>>>> Stashed changes

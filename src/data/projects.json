@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< Updated upstream
     "title": "Data Analysis of Video Game Sales",
     "techStack": "Python, NumPy, pandas, matplotlib, seaborn, Jupyter Notebooks",
     "image": "assets/coding-code-svgrepo-com.svg",
@@ -22,5 +23,53 @@
     "techStack": "Markdown, Node.js",
     "image": "",
     "description": ""
+=======
+    "title": "AI Web Portfolio Generator",
+    "techStack": "Python, FastAPI, Google GenAI, Render, Vercel",
+    "image": "",
+    "github": "https://github.com/SakshamTejpal/web-portfolio-genrator-backend",
+    "live": "",
+    "description": "An AI-powered platform that instantly generates complete developer portfolios by creating custom HTML, CSS, and JavaScript code based on user inputs. Users enter profile details through a simple web interface, and the system outputs a fully downloadable, ready-to-customize portfolio website within seconds."
+  },
+  {
+    "title": "AI Job Application Agent (DRL Automation)",
+    "techStack": "Python, Selenium, OpenAI Gym, Javascript",
+    "image": "",
+    "github": "https://github.com/SakshamTejpal/job-application-agent",
+    "live": "",
+    "description": "A Deep Reinforcement Learning–based autonomous agent designed to complete multi-page job application forms end-to-end. It navigates fields, buttons, and submission flows on its own, demonstrating automated decision-making and web interaction for repetitive form-filling tasks."
+  },
+  {
+    "title": "Exotic Car Rental Application (Web & Mobile)",
+    "techStack": "Java, JavaScript, REST API, Flutter, Firebase",
+    "image": "",
+    "github": "",
+    "live": "",
+    "description": "A cross-platform vehicle rental system where users can browse cars, check availability, and make secure bookings through both a modern web interface and a real-time synced mobile app. The platform includes admin dashboards for inventory and reservation management, delivering a seamless experience across devices."
+  },
+  {
+    "title": "Chat Rooms Web Application",
+    "techStack": "Java, WebSockets, HTML, CSS, JavaScript",
+    "image": "",
+    "github": "https://github.com/SakshamTejpal/chat-rooms.git",
+    "live": "",
+    "description": "A real-time chat platform supporting multiple rooms and direct messaging for over 50 concurrent users. It provides live updates through WebSockets, secure session-based authentication, and a responsive interface for scalable, low-latency communication."
+  },
+  {
+    "title": "Data Analysis of Video Game Sales",
+    "techStack": "Python, NumPy, pandas, matplotlib, seaborn",
+    "image": "",
+    "github": "https://github.com/SakshamTejpal/data-analysis-game-sales.git",
+    "live": "",
+    "description": "A data-driven analytics project that visualizes global video game sales trends across regions, genres, and platforms. It highlights top-performing segments and market behavior through clear charts derived from cleaned and processed Kaggle datasets."
+  },
+  {
+    "title": "Data Visualization of Netflix Streams",
+    "techStack": "R, ggplot2, plotly, dplyr, tidyr, sf",
+    "image": "",
+    "github": "https://github.com/SakshamTejpal/data-visualization-analysis-netflix-titles-r.git",
+    "live": "",
+    "description": "An interactive visualization project exploring 8,800+ Netflix titles to reveal trends in genres, release years, countries, and content types. It presents global content distribution and viewing patterns through dynamic visual dashboards built in R."
+>>>>>>> Stashed changes
   }
 ]

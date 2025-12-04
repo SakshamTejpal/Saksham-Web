@@ -19,13 +19,8 @@
   color: #dda50b; 
 }
 .profile-image {
-<<<<<<< Updated upstream
   width: 50%;
   height: 70vh;
-=======
-  width: 45%;
-  height: 55vh;
->>>>>>> Stashed changes
   object-fit: cover;
   border-radius: 8px;
   filter: brightness(70%);

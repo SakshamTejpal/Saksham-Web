@@ -1,29 +1,5 @@
 [
   {
-<<<<<<< Updated upstream
-    "title": "Data Analysis of Video Game Sales",
-    "techStack": "Python, NumPy, pandas, matplotlib, seaborn, Jupyter Notebooks",
-    "image": "assets/coding-code-svgrepo-com.svg",
-    "description": "Performed data analysis on decades of video game sales data to uncover regional, platform, and genre-specific trends. Enhanced dataset quality through cleaning and preprocessing using Python’s pandas and NumPy, Identified and visualized key market dynamics using matplotlib and seaborn. Delivered clear and actionable insights, for understanding market performance and strategic decision-making."
-  },
-  {
-    "title": "Exotic Car Rental App",
-    "techStack": "Flutter, Firebase, Android, iOS",
-    "image": "",
-    "description": "Developed a cross-platform car rental mobile app for Android and iOS using Flutter, delivering a seamless experience for users to browse vehicles, check real-time availability, and make secure bookings. Integrated Firebase for data synchronization and push notifications, keeping users updated on their reservations and account activity. Focused on intuitive UI and secure authentication, enabling easy search, fast booking, and safe account management. Optimized performance for both platforms, leveraging Flutter and Firebase to provide a reliable, modern solution that improved engagement and operational efficiency."
-  },
-  {
-    "title": "ML Classifier",
-    "techStack": "scikit-learn, pandas",
-    "image": "",
-    "description": ""
-  },
-  {
-    "title": "Blog CMS",
-    "techStack": "Markdown, Node.js",
-    "image": "",
-    "description": ""
-=======
     "title": "AI Web Portfolio Generator",
     "techStack": "Python, FastAPI, Google GenAI, Render, Vercel",
     "image": "",
@@ -70,6 +46,5 @@
     "github": "https://github.com/SakshamTejpal/data-visualization-analysis-netflix-titles-r.git",
     "live": "",
     "description": "An interactive visualization project exploring 8,800+ Netflix titles to reveal trends in genres, release years, countries, and content types. It presents global content distribution and viewing patterns through dynamic visual dashboards built in R."
->>>>>>> Stashed changes
   }
 ]

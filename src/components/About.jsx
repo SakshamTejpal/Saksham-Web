@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import profilePic from "../assets/profile.JPEG";
+import profilePic from "../assets/profile.jpg";
 import "../styles/About.css";
 import useIsMobile from "../hooks/screensize";
 

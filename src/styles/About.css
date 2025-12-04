@@ -19,8 +19,8 @@
   color: #dda50b; 
 }
 .profile-image {
-  width: 50%;
-  height: 70vh;
+  width: 45%;
+  height: 55vh;
   object-fit: cover;
   border-radius: 8px;
   filter: brightness(70%);
@@ -107,7 +107,7 @@
 @media (min-width: 1600px) {
 
 .about-content {
-  padding: 5rem 10rem;
+  padding: 5rem 12rem;
 }
 .profile-image {
   height: 55vh;

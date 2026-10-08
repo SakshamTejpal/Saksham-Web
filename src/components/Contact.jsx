@@ -1,111 +1,99 @@
-import React, { useState } from "react";
-import emailjs from '@emailjs/browser';
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { PiGithubLogoLight, PiLinkedinLogoLight, PiInstagramLogoLight } from "react-icons/pi";
-import '../styles/Contact.css';
-import useIsMobile from "../hooks/screensize.js";
+import useIsMobile from "../hooks/useIsMobile";
+import "../styles/Contact.css";
 
+// EmailJS IDs are public by design; restrict allowed origins and rate limits in the EmailJS dashboard.
+const EMAILJS_SERVICE_ID = "service_oy8mroc";
+const EMAILJS_TEMPLATE_ID = "template_y9ndlhp";
+const EMAILJS_PUBLIC_KEY = "STxU44Yj_0DPkBs73";
 
-function Contact() {
-  const [name, setName] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [message, setMessage] = useState("");
-  const isMobile =  useIsMobile();
+const SOCIAL_LINKS = [
+  { label: "GitHub", href: "https://github.com/SakshamTejpal", Icon: PiGithubLogoLight },
+  { label: "Instagram", href: "https://www.instagram.com/saksham.tejpal_/", Icon: PiInstagramLogoLight },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/saksham-tejpal-654b88116/", Icon: PiLinkedinLogoLight },
+];
 
-  const handleSubmit = (e) => {
+const EMPTY_FORM = { name: "", email: "", message: "" };
+
+export default function Contact() {
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [sending, setSending] = useState(false);
+  const isMobile = useIsMobile();
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const serviceID = 'service_oy8mroc';
-    const templateID = 'template_y9ndlhp';
-    const publicKey = 'STxU44Yj_0DPkBs73';
-
-    emailjs.send(serviceID, templateID, {
-      from_name: name,
-      from_email: emailInput,
-      message: message,
-    }, publicKey)
-    .then(() => {
+    setSending(true);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        { from_name: form.name, from_email: form.email, message: form.message },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
       alert("Message sent successfully!");
-      setName("");
-      setEmailInput("");
-      setMessage("");
-    }, (error) => {
-      alert("Failed to send message. Please try again.");
+      setForm(EMPTY_FORM);
+    } catch (error) {
       console.error(error);
-    });
+      alert("Failed to send message. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
     <section className="contact" id="contact">
       <div className="contact-content">
-        <h2 className="contact-title">Lets Connect</h2>
+        <h2 className="contact-title">Let's Connect</h2>
         <div className="contact-links">
-          <a
-            href="https://github.com/SakshamTejpal"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            {isMobile ? <PiGithubLogoLight size={35} /> : <h4>GitHub</h4>}
-          </a>
-          <a
-            href="https://www.instagram.com/saksham.tejpal_/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            {isMobile ? <PiInstagramLogoLight size={35} color="currentColor" /> : <h4>Instagram</h4>}
-          </a>
-          <a
-            href="https://www.linkedin.com/in/saksham-tejpal-654b88116/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            {isMobile ? <PiLinkedinLogoLight size={35} color="currentColor" /> : <h4>LinkedIn</h4>}
-          </a>
+          {SOCIAL_LINKS.map(({ label, href, Icon }) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
+              {isMobile ? <Icon size={35} /> : <h4>{label}</h4>}
+            </a>
+          ))}
         </div>
 
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-fields">
             <input
-              className="pill"
-              id="name"
+              name="name"
               type="text"
               placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              aria-label="Name"
+              autoComplete="name"
+              maxLength={100}
+              value={form.name}
+              onChange={handleChange}
               required
-              style={{  padding: "0.5rem"}}
             />
             <input
-              className="pill"
-              id="email"
+              name="email"
               type="email"
               placeholder="Email"
-              value={emailInput}
-              onChange={(e) => setEmailInput(e.target.value)}
+              aria-label="Email"
+              autoComplete="email"
+              maxLength={254}
+              value={form.email}
+              onChange={handleChange}
               required
-              style={{  padding: "0.5rem" }}
             />
             <textarea
-              id="message"
+              name="message"
               placeholder="Write your message here…"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              aria-label="Message"
+              maxLength={5000}
               rows={5}
+              value={form.message}
+              onChange={handleChange}
               required
             />
           </div>
           <div className="form-button">
-            <button type="submit" style={{ fontSize: "1.25rem", padding: "0.75rem 2rem" }}>
-              <span className="contact-button-text">
-                {
-                  isMobile ? "Send" : 
-                    <>›
-                    {/* <br/>Send */}
-                    </>
-                } 
-              </span>
+            <button type="submit" disabled={sending} aria-label="Send">
+              <span className="contact-button-text">{isMobile ? (sending ? "Sending…" : "Send") : "›"}</span>
             </button>
           </div>
         </form>
@@ -113,6 +101,3 @@ function Contact() {
     </section>
   );
 }
-
-export default Contact;
-

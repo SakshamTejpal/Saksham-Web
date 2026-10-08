@@ -1,23 +1,21 @@
-/* ───────────────────────────────────────────────────────────────────────────
-   About (unchanged)
-─────────────────────────────────────────────────────────────────────────── */
 .about {
   height: 100vh;
   width: 100%;
 }
+
 .about-content {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  padding: 5rem 8rem;
-  padding-top: 0px;
-  /* border: #dda50b 1px solid;  */
+  padding: 0 8rem 5rem;
 }
+
 .about-highlight {
-  color: #dda50b; 
+  color: #dda50b;
 }
+
 .profile-image {
   width: 45%;
   height: 55vh;
@@ -25,93 +23,78 @@
   border-radius: 8px;
   filter: brightness(70%);
   margin: 40px;
-  /* border: 5px solid rgba(255, 255, 255); */
 }
+
 .about-text {
-  width: 50%; 
+  width: 50%;
   margin: 40px;
-  /* border: 5px solid rgba(255, 255, 255); */
 }
+
+.about-text p {
+  margin-bottom: 1.2em;
+}
+
+/* Hidden and shifted sideways until the section scrolls into view (About.jsx adds .in-view). */
 .profile-image,
 .about-text {
   opacity: 0;
   transition: opacity 1s ease, transform 0.5s ease;
 }
-/* When About is in view */
-.about.about-in-view .profile-image,
-.about.about-in-view .about-text {
-  opacity: 1;
-  transform: translateX(0);
-}
-/* Reset when out of view */
-.about.about-out-view .profile-image {
-  opacity: 0;
+.profile-image {
   transform: translateX(-50px);
 }
-.about.about-out-view .about-text {
-  opacity: 0;
+.about-text {
   transform: translateX(50px);
 }
-
+.about.in-view .profile-image,
+.about.in-view .about-text {
+  opacity: 1;
+  transform: none;
+}
 
 @media (max-width: 500px) {
-    
-  .about{
-    padding : 0px;
+  .about {
     height: 100%;
-    /* border: 2px solid #dda50b; */
   }
-  .about-content{
+
+  .about-content {
     flex-direction: column;
-    padding: 0px;
-    margin-top: 0px;
-    /* border: 2px solid #dd120b; */
+    padding: 0;
   }
+
   .about-text {
-    padding: 0px 40px 0 40px;
-    width: 100% !important;
-    font-size: 18px;
-    /* border: 2px solid #dd120b; */
+    width: 100%;
+    padding: 0 40px;
   }
-  .about-text p {
-    font-size: 17px;
-  }
+
+  .about-text p,
   .about-highlight {
     font-size: 17px;
   }
+
+  /* On mobile the photo is always visible; only the text fades in. */
   .profile-image {
     height: 40vh;
     width: 100%;
-    object-fit: cover;
-    margin-top: 0px;
-    padding: 0px;
+    margin-top: 0;
     padding-top: 80px;
-    filter: brightness(100%);
-    mask-image: linear-gradient(to bottom, rgba(255,255,255,1) 30%, rgba(255,255,255,0) 100%);
+    filter: none;
+    opacity: 1;
+    mask-image: linear-gradient(to bottom, #fff 30%, transparent 100%);
   }
 
-  .about.about-in-view .profile-image,
-  .about.about-in-view .about-text,
-  .about.about-out-view .profile-image,
-  .about.about-out-view .about-text {
-    transform: none !important;
-  }
-
-  .about.about-in-view .profile-image,
-  .about.about-out-view .profile-image {
-    transform: none !important;
-    opacity: 1 !important;
+  .profile-image,
+  .about-text {
+    transform: none;
   }
 }
 
 @media (min-width: 1600px) {
+  .about-content {
+    padding: 5rem 12rem;
+  }
 
-.about-content {
-  padding: 5rem 12rem;
-}
-.profile-image {
-  height: 55vh;
-  margin: 90px;
-  /* border: 5px solid rgba(255, 255, 255); */
-}
+  .profile-image {
+    margin: 90px;
+  }
 }

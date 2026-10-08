@@ -1,27 +1,18 @@
-/* ─────────────────────────────────────────────────────────────
-   NAVBAR
-───────────────────────────────────────────────────────────── */
 .navbar {
   position: fixed;
   top: 30%;
   right: 0;
   width: 180px;
   z-index: 1000;
-  pointer-events: none;
-}
-.navbar.compact {
-  position: fixed;
-  top: 30%;
-  right: 0;
-  width: 180px;
-  z-index: 1000;
-  pointer-events: none;
-  width: 180px;
-  transition: all 0.2s ease;
-  padding-left: 25px;
+  pointer-events: none; /* only the open menu (.fade-in) receives clicks */
 }
 
-/* Trigger label */
+.navbar.desktop.compact {
+  padding-left: 25px;
+  transition: all 0.2s ease;
+}
+
+/* "Menu" / "☰" / "⋮" / swipe hint shown while the menu is closed */
 .nav-trigger {
   position: absolute;
   top: 50%;
@@ -31,95 +22,83 @@
   transition: all 0.1s ease;
 }
 
-.nav-trigger.trigger-compact {
+.compact .nav-trigger {
   right: 30px;
   font-size: 20px;
 }
 
-/* Swipe arrow animation */
-@keyframes swipePulse {
-  0% { transform: translateX(0); opacity: 0.5; }
-  50% { transform: translateX(-5px); opacity: 1; }
-  100% { transform: translateX(0); opacity: 0.5; }
-}
 .swipe-arrow {
   animation: swipePulse 1.5s infinite;
   font-size: 30px;
-  opacity: 0.7;
 }
 
-/* List container */
+@keyframes swipePulse {
+  0%, 100% { transform: translateX(0); opacity: 0.5; }
+  50% { transform: translateX(-5px); opacity: 1; }
+}
+
 .nav-list {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  opacity: 0;
-  pointer-events: none;
+  list-style: none;
   transition: opacity 0.5s ease;
-  list-style: none; 
 }
-.nav-list.beyond {
-  justify-content: center;
-  background: rgba(50, 50, 50, 0.3);
-  backdrop-filter: blur(10px);
 
-  border-radius: 8px;
+.navbar.desktop.compact .nav-list {
+  justify-content: center;
   width: 140px;
   height: 280px;
-}
-.nav-list.icon-mode {
-  background: rgba(58, 58, 58, 0.3);
-  backdrop-filter: blur(5px);
-  border-radius: 50px;
-  padding: 1rem 2rem;
-  margin-right: 20px;
+  border-radius: 8px;
+  background: rgba(50, 50, 50, 0.3);
+  backdrop-filter: blur(10px);
 }
 
-/* Nav items */
+.navbar.mobile .nav-list {
+  margin-right: 20px;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  background: rgba(58, 58, 58, 0.3);
+  backdrop-filter: blur(5px);
+}
+
 .nav-item a {
   font-size: 30px;
-  color: white;
+  color: #fff;
   text-decoration: none;
   transition: all 0.2s ease;
 }
+
 .nav-item a:hover {
   color: #dda50b;
 }
 
-/* Fade animations */
 .fade-in {
   opacity: 1;
   pointer-events: auto;
 }
+
 .fade-out {
   opacity: 0;
   pointer-events: none;
 }
 
-/* Swipe zone */
 @media (max-width: 500px) {
   .navbar {
-    right: 0;
     width: 80px;
   }
+
   .nav-trigger {
     right: 20px;
   }
-  .swipe-area {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
-    width: 50%;
-    z-index: 999;
-  }
+
   .nav-item a {
-  font-size: 16px;
+    font-size: 16px;
   }
-  .nav-trigger.trigger-compact {
+
+  .compact .nav-trigger {
     right: 10px;
-    font-size: 20px;
     padding: 1px 6px;
   }
 }

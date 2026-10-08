@@ -1,128 +1,34 @@
-// src/components/Timeline.jsx
-import React, { useEffect, useRef } from "react";
-import useIsMobile from "../hooks/screensize";
-import "../styles/Timeline.css"; 
-
-const timelineData = [
-  // {
-  //   year: "Jun 2025",
-  //   title: "Launched Web portfolio",
-  //   description:
-  //     "Deployed my first React portfolio site to showcase my background, projects, and skills.",
-  // },
-  {
-    year: "Sep 2022 - May 2026",
-    title: "Bachelor's in Computer Science (Data Science)",
-    place: "Ontario Tech University",
-    description:
-      "Pursuing degree in Computer Science specializing in Data Science from Ontario Tech University.",
-  },
-  {
-    year: "Jul 2022 – Dec 2023",
-    title: "Field Network Engineer (Technical Lead)",
-    place: "Eureka Electrosoft",
-    description:
-      "Led a technical team to survey, plan, and test telecom sites. Developed troubleshooting methods and integrated new technologies and RF systems.",
-  },
-  {
-    year: "Jan 2021 – Jun 2022",
-    title: "Field Network Technician",
-    place: "Genwave Technologies",
-    description:
-      "Diagnosed and resolved RF, fiber optics, and power issues. Configured RF systems. and Interpreted RF diagrams to guide construction teams",
-  },
-  {
-    year: "	May 2018 – Jan 2021",
-    title: "Web developer",
-    place: "Sayal Electronics",
-    description:
-      "Created web dashboards, inventory management, and CRM systems maintained the main website and databases and generated data insights.",
-  },
-  {
-    year: "May 2018",
-    title: "Diploma in Software Engineering Technician",
-    place: "Centennial College",
-    description: 
-      "Graduated from Centennial College with a diploma in Software Engineering ."
-  },
-  {
-    year: "March 2017 – December 2017",
-    title: "Database and IT Assistant (Internship)",
-    place: "AdvantAge Ontario",
-    description: 
-      "Analyzed stakeholder data to deliver actionable insights, Configured systems and developed tools for media conversion."
-  },
-];
+import { useEffect, useRef } from "react";
+import timeline from "../data/timeline.json";
+import "../styles/Timeline.css";
 
 export default function Timeline() {
-  // Ref to the container (whose ::before is the spine)
   const containerRef = useRef(null);
-  // Refs array to each .timeline-item
-  const itemsRef = useRef([]);
-  // Keep track of last scrollY to determine scroll direction
-  const lastScrollY = useRef(window.scrollY);
-  // +1 = scrolling down, -1 = scrolling up (initially assume down)
-  const scrollDir = useRef(1);
-  const isMobile = useIsMobile()
 
   useEffect(() => {
-    // 1) Listen to scroll events to update scrollDir.current
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY > lastScrollY.current) {
-        scrollDir.current = 1; // scrolling down
-      } else if (currentY < lastScrollY.current) {
-        scrollDir.current = -1; // scrolling up
-      }
-      lastScrollY.current = currentY;
-    };
-    window.addEventListener("scroll", onScroll);
+    const container = containerRef.current;
 
-    // 2) Observe the container and each item, toggling classes on enter/exit
-    const containerEl = containerRef.current;
-    const spineObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // If user is scrolling down into it, animate from top→bottom
-            // If scrolling up into it (from below), animate from bottom→top
-            if (scrollDir.current > 0) {
-              entry.target.classList.add("animate-down");
-              entry.target.classList.remove("animate-up");
-            } else {
-              entry.target.classList.add("animate-up");
-              entry.target.classList.remove("animate-down");
-            }
-          } else {
-            // Once they leave viewport, reset both classes so next entry can re-trigger
-            entry.target.classList.remove("animate-down", "animate-up");
-          }
-        });
+    // Grow the center line when the timeline enters view: top→bottom when scrolling down into it,
+    // bottom→top when scrolling up into it (i.e. its top is already above the viewport).
+    const lineObserver = new IntersectionObserver(
+      ([entry]) => {
+        const enteringFromBelow = entry.boundingClientRect.top < 0;
+        container.classList.toggle("animate-down", entry.isIntersecting && !enteringFromBelow);
+        container.classList.toggle("animate-up", entry.isIntersecting && enteringFromBelow);
       },
       { threshold: 0.1 }
     );
-    if (containerEl) spineObserver.observe(containerEl);
+    lineObserver.observe(container);
 
-    // 3) Observe each .timeline-item to toggle fade-in/fade-out
+    // Fade each entry in/out as it enters/leaves the viewport.
     const itemObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in-view");
-          } else {
-            entry.target.classList.remove("in-view");
-          }
-        });
-      },
+      (entries) => entries.forEach((entry) => entry.target.classList.toggle("in-view", entry.isIntersecting)),
       { threshold: 0.1 }
     );
-    itemsRef.current.forEach((el) => {
-      if (el) itemObserver.observe(el);
-    });
+    container.querySelectorAll(".timeline-item").forEach((item) => itemObserver.observe(item));
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      spineObserver.disconnect();
+      lineObserver.disconnect();
       itemObserver.disconnect();
     };
   }, []);
@@ -130,18 +36,10 @@ export default function Timeline() {
   return (
     <section className="timeline" id="timeline">
       <div className="timeline-content">
-      <h2 className="timeline-title">Over the years</h2>
-      {/* <div className="timeline-container" ref={containerRef}> */}
-      <div className={`timeline-container ${isMobile ? "mobile" : ""}`} ref={containerRef}>
-
-        {timelineData.map((item, index) => {
-          const side = isMobile ? "right" : (index % 2 === 0 ? "left" : "right");
-          return (
-            <div
-              key={index}
-              className={`timeline-item ${side}`}
-              ref={(el) => (itemsRef.current[index] = el)}
-            >
+        <h2 className="timeline-title">Over the years</h2>
+        <div className="timeline-container" ref={containerRef}>
+          {timeline.map((item, index) => (
+            <div key={item.title} className={`timeline-item ${index % 2 === 0 ? "left" : "right"}`}>
               <div className="timeline-dot" />
               <div className="timeline-content-box">
                 <span className="timeline-year">{item.year}</span>
@@ -150,9 +48,8 @@ export default function Timeline() {
                 <p className="timeline-description">{item.description}</p>
               </div>
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
       </div>
     </section>
   );

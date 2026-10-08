@@ -1,0 +1,38 @@
+[
+  {
+    "year": "Sep 2022 – May 2026",
+    "title": "Bachelor's in Computer Science (Data Science)",
+    "place": "Ontario Tech University",
+    "description": "Pursuing degree in Computer Science specializing in Data Science from Ontario Tech University."
+  },
+  {
+    "year": "Jul 2022 – Dec 2023",
+    "title": "Field Network Engineer (Technical Lead)",
+    "place": "Eureka Electrosoft",
+    "description": "Led a technical team to survey, plan, and test telecom sites. Developed troubleshooting methods and integrated new technologies and RF systems."
+  },
+  {
+    "year": "Jan 2021 – Jun 2022",
+    "title": "Field Network Technician",
+    "place": "Genwave Technologies",
+    "description": "Diagnosed and resolved RF, fiber optics, and power issues. Configured RF systems and interpreted RF diagrams to guide construction teams."
+  },
+  {
+    "year": "May 2018 – Jan 2021",
+    "title": "Web Developer",
+    "place": "Sayal Electronics",
+    "description": "Created web dashboards, inventory management, and CRM systems; maintained the main website and databases and generated data insights."
+  },
+  {
+    "year": "May 2018",
+    "title": "Diploma in Software Engineering Technician",
+    "place": "Centennial College",
+    "description": "Graduated from Centennial College with a diploma in Software Engineering."
+  },
+  {
+    "year": "Mar 2017 – Dec 2017",
+    "title": "Database and IT Assistant (Internship)",
+    "place": "AdvantAge Ontario",
+    "description": "Analyzed stakeholder data to deliver actionable insights. Configured systems and developed tools for media conversion."
+  }
+]

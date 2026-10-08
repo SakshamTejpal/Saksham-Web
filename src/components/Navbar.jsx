@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   PiHouseSimpleLight,
   PiUserLight,
@@ -7,151 +7,87 @@ import {
   PiEnvelopeSimpleLight,
 } from "react-icons/pi";
 import { useSwipeable } from "react-swipeable";
-import useIsMobile from "../hooks/screensize";
+import useIsMobile from "../hooks/useIsMobile";
 import "../styles/Navbar.css";
 
-function Navbar() {
-  const [active, setActive] = useState(false);
-  const [beyondHero, setBeyondHero] = useState(false);
+const NAV_ITEMS = [
+  { id: "hero", text: "Home", Icon: PiHouseSimpleLight },
+  { id: "about", text: "About", Icon: PiUserLight },
+  { id: "projects", text: "Projects", Icon: PiFolderSimpleLight },
+  { id: "timeline", text: "Timeline", Icon: PiCalendarBlankLight },
+  { id: "contact", text: "Contact", Icon: PiEnvelopeSimpleLight },
+];
+
+// Desktop: distance (px) from the right edge of the window that opens the menu on hover.
+const SMALL_HOVER_RANGE = 90;
+const LARGE_HOVER_RANGE = 200;
+
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
+  const [beyondHero, setBeyondHero] = useState(false); // scrolled past the hero → compact menu
   const navRef = useRef(null);
   const isMobile = useIsMobile();
-  const smallHoverRange = 90;
-  const largeHoverRange = 200;
-  const [hoverWidth, setHoverWidth] = useState(smallHoverRange); // for compact hover zone
 
-  // Track section intersection
+  // Switch to the compact menu once most of the hero has scrolled out of view.
   useEffect(() => {
-    const heroSection = document.getElementById("hero");
-    if (!heroSection) return;
-
-    let lastScrollY = window.scrollY;
-    let scrollDirection = "down";
-
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      scrollDirection = currentY > lastScrollY ? "down" : "up";
-      lastScrollY = currentY;
-    };
-
-    window.addEventListener("scroll", onScroll);
-
+    const hero = document.getElementById("hero");
+    const threshold = isMobile ? 0.3 : 0.8;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        const ratio = entry.intersectionRatio;
-
-        const threshold = (isMobile ? 0.3 : 0.8); // Adjust this as your X/Y value (80% visible)
-
-        if (scrollDirection === "down" && ratio < threshold) {
-          setBeyondHero(true);
-        } else if (scrollDirection === "up" && ratio > threshold) {
-          setBeyondHero(false);
-        }
-      },
-      {
-        threshold: Array.from({ length: 101 }, (_, i) => i / 100) // 0 → 1 in 1% steps
-      }
+      ([entry]) => setBeyondHero(entry.intersectionRatio < threshold),
+      { threshold }
     );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [isMobile]);
 
-    observer.observe(heroSection);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      observer.disconnect();
-    };
-  }, []);
-
-  // Swipe gesture for mobile
-  const handlers = useSwipeable({
-    onSwipedLeft: () => setActive(true),
-    onSwipedRight: () => setActive(false),
+  // Mobile: swipe left on the right half of the screen to open, swipe right to close.
+  // Listening on the whole document (rather than an overlay) keeps the page underneath tappable.
+  const { ref: swipeRef } = useSwipeable({
+    onSwipedLeft: ({ initial: [startX] }) => startX > window.innerWidth / 2 && setOpen(true),
+    onSwipedRight: () => setOpen(false),
     delta: 20,
-    preventDefaultTouchmoveEvent: true,
-    trackTouch: true,
+    trackTouch: isMobile,
   });
+  useEffect(() => swipeRef(document), [swipeRef]);
 
-  // Close on outside click (mobile)
+  // Mobile: tapping outside the menu closes it.
   useEffect(() => {
     if (!isMobile) return;
     const handleClick = (e) => {
-      if (navRef.current && !navRef.current.contains(e.target)) {
-        setActive(false);
-      }
+      if (!navRef.current.contains(e.target)) setOpen(false);
     };
     document.addEventListener("click", handleClick);
     return () => document.removeEventListener("click", handleClick);
   }, [isMobile]);
 
-  // Desktop hover trigger
-useEffect(() => {
-  if (isMobile) return;
+  // Desktop: open when the mouse nears the right edge. In compact mode the zone starts small
+  // and widens while open, so the menu doesn't close as soon as you move toward it.
+  useEffect(() => {
+    if (isMobile) return;
+    const handleMouseMove = (e) => {
+      const fromRight = window.innerWidth - e.clientX;
+      setOpen((isOpen) => fromRight < (!beyondHero || isOpen ? LARGE_HOVER_RANGE : SMALL_HOVER_RANGE));
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isMobile, beyondHero]);
 
-  const handleMouseMove = (e) => {
-    const fromRight = window.innerWidth - e.clientX;
-
-    if (!beyondHero) {
-      setActive(fromRight < largeHoverRange);
-    } else {
-      // Compact mode → Dynamic hover zone
-      if (!active && fromRight < hoverWidth) {
-        setActive(true);
-        setHoverWidth(largeHoverRange);
-      } else if (active && fromRight >= largeHoverRange) {
-        setActive(false);
-        setHoverWidth(smallHoverRange);
-      }
-    }
-  };
-
-  window.addEventListener("mousemove", handleMouseMove);
-  return () => window.removeEventListener("mousemove", handleMouseMove);
-}, [active, isMobile, hoverWidth, beyondHero]);
-
-  const triggerLabel = () => {
-    if (isMobile) {
-      return beyondHero ? "⋮" : <span className="swipe-arrow">‹‹‹</span>;
-    }
-    return beyondHero ? "☰" : "Menu";
-  };
-
-  const navItems = [
-    { id: "hero", text: "Home", icon: <PiHouseSimpleLight size={30} /> },
-    { id: "about", text: "About", icon: <PiUserLight size={30} /> },
-    { id: "projects", text: "Projects", icon: <PiFolderSimpleLight size={30} /> },
-    { id: "timeline", text: "Timeline", icon: <PiCalendarBlankLight size={30} /> },
-    { id: "contact", text: "Contact", icon: <PiEnvelopeSimpleLight size={30} /> },
-  ];
+  let triggerLabel;
+  if (isMobile) triggerLabel = beyondHero ? "⋮" : <span className="swipe-arrow">‹‹‹</span>;
+  else triggerLabel = beyondHero ? "☰" : "Menu";
 
   return (
-    <div className="swipe-area" {...(isMobile ? handlers : {})}>
-      <nav
-        ref={navRef}
-        className={`navbar ${!isMobile ? (beyondHero ? "compact" : "") : ""}`}
-      >
-        <div
-          className={`nav-trigger ${active ? "fade-out" : "fade-in"} ${
-            beyondHero ? "trigger-compact" : ""
-          }`}
-          style={{ cursor: isMobile ? "pointer" : "default" }}
-        >
-          {triggerLabel()}
-        </div>
-
-        <ul
-          className={`nav-list ${active ? "fade-in" : "fade-out"} ${
-            !isMobile ? (beyondHero ? "beyond" : "") : "icon-mode"
-          }`}
-        >
-          {navItems.map((item) => (
-            <li key={item.id} className="nav-item">
-              <a href={`#${item.id}`}>
-                {isMobile ? item.icon : item.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+    <nav ref={navRef} className={`navbar ${isMobile ? "mobile" : "desktop"} ${beyondHero ? "compact" : ""}`}>
+      <div className={`nav-trigger ${open ? "fade-out" : "fade-in"}`}>{triggerLabel}</div>
+      <ul className={`nav-list ${open ? "fade-in" : "fade-out"}`}>
+        {NAV_ITEMS.map(({ id, text, Icon }) => (
+          <li key={id} className="nav-item">
+            <a href={`#${id}`} aria-label={text}>
+              {isMobile ? <Icon size={30} /> : text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
-
-export default Navbar;

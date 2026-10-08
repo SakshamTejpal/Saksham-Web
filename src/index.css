@@ -1,10 +1,11 @@
 :root {
   font-family: system-ui, Helvetica, sans-serif;
-  color-scheme: light dark;
+  color-scheme: dark; /* the site is always dark, so form controls should be too */
   background-color: #121212;
-  color: rgb(255, 255, 255);
+  color: #fff;
   text-align: center;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -13,8 +14,18 @@
   font-weight: 300;
 }
 
+/* Keeps 1rem = 16px (the * rule above would otherwise make it 20px). */
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
 
+html,
+body {
+  overflow-x: hidden;
+}
 
-
-
-
+h2 {
+  font-size: 8vw;
+  padding-bottom: 50px;
+}

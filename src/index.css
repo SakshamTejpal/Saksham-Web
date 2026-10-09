@@ -83,7 +83,12 @@ ul {
   letter-spacing: -0.05em;
 }
 
+.section-title.left {
+  padding-left: clamp(0px, 6vw, 112px);
+}
+
 .section-title.right {
+  padding-right: clamp(0px, 6vw, 112px);
   text-align: right;
 }
 

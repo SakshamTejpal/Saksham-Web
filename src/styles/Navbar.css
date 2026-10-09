@@ -1,11 +1,16 @@
 .menu {
   --fold-x: 40px; /* how far items travel toward the icon when folding */
   position: fixed;
-  top: 50%;
+  top: 36%; /* first screen: above the name */
   right: clamp(16px, 2.5vw, 36px);
   z-index: 100;
   transform: translateY(-50%);
   pointer-events: none; /* only the links and the icon take clicks, never the empty area */
+  transition: top 1.2s var(--ease);
+}
+
+.menu.collapsed {
+  top: 50%;
 }
 
 /* Panel behind the reopened list; invisible on the first screen. */
@@ -174,7 +179,8 @@
 
 /* Phones: the icon sits in the bottom-right corner and the list opens above it. */
 @media (max-width: 500px) {
-  .menu {
+  .menu,
+  .menu.collapsed {
     top: auto;
     bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     right: 16px;

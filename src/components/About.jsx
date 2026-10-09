@@ -1,5 +1,4 @@
 import profilePic from "../assets/profile.jpg";
-import SectionTitle from "./SectionTitle";
 import "../styles/About.css";
 
 const Highlight = ({ children }) => <span className="about-highlight">{children}</span>;
@@ -7,7 +6,6 @@ const Highlight = ({ children }) => <span className="about-highlight">{children}
 export default function About() {
   return (
     <section className="section" id="about" data-snap>
-      <SectionTitle>About</SectionTitle>
       <div className="about">
         <div data-reveal>
           <img src={profilePic} alt="Saksham Tejpal" className="about-photo" />

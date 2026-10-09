@@ -4,7 +4,7 @@
   justify-content: space-between;
   height: 100svh;
   min-height: 520px;
-  padding: clamp(36px, 8vh, 88px) var(--gutter) clamp(20px, 4vh, 40px);
+  padding: clamp(20px, 4vh, 44px) var(--gutter) clamp(20px, 4vh, 40px);
 }
 
 /* ── 24-hour line ───────────────────────────── */
@@ -125,6 +125,7 @@
 }
 
 .hero-hello {
+  padding-left: clamp(16px, 8vw, 128px);
   margin-bottom: clamp(8px, 1.4vw, 20px);
   animation: blurIn 1.6s var(--ease) 0.1s both;
 }
@@ -144,6 +145,7 @@
 
 .hero-role {
   margin-top: clamp(12px, 2.2vw, 36px);
+  padding-right: clamp(16px, 8vw, 128px);
   text-align: right;
   animation: blurIn 1.6s var(--ease) 0.5s both;
 }

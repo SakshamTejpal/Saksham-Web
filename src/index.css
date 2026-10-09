@@ -1,31 +1,133 @@
 :root {
-  font-family: system-ui, Helvetica, sans-serif;
-  color-scheme: dark; /* the site is always dark, so form controls should be too */
-  background-color: #121212;
-  color: #fff;
-  text-align: center;
+  /* Brand: cool black, off-white, yellow-gold used sparingly. */
+  --ink: #09090a;
+  --paper: #ecebe8;
+  --muted: #7d7c79;
+  --hair: rgba(236, 235, 232, 0.12);
+  --gold: #cdb25b;
+
+  --sans: "Manrope Variable", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+
+  /* Slow, settling motion: starts quickly, glides to rest. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(20px, 5vw, 72px);
+
+  color-scheme: dark;
 }
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-size: 20px;
-  font-weight: 300;
 }
 
-/* Keeps 1rem = 16px (the * rule above would otherwise make it 20px). */
 html {
-  font-size: 16px;
+  background: var(--ink);
   scroll-behavior: smooth;
 }
 
-html,
 body {
   overflow-x: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  font: 300 1rem/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-h2 {
-  font-size: 8vw;
-  padding-bottom: 50px;
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 1px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* Shared building blocks */
+.section {
+  padding: clamp(112px, 18vh, 200px) var(--gutter) 0;
+}
+
+.section-title {
+  margin-bottom: clamp(40px, 8vh, 96px);
+  font-size: clamp(56px, 11vw, 176px);
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+}
+
+.label {
+  font: 400 12px/1.4 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: clamp(96px, 16vh, 160px) var(--gutter) 32px;
+}
+
+/* Scroll reveal (see useReveal): each element fades up from a soft blur, once. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(6px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease);
+}
+
+[data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+  }
 }

@@ -1,7 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { PiGithubLogoLight, PiLinkedinLogoLight, PiInstagramLogoLight } from "react-icons/pi";
-import useIsMobile from "../hooks/useIsMobile";
 import "../styles/Contact.css";
 
 // EmailJS IDs are public by design; restrict allowed origins and rate limits in the EmailJS dashboard.
@@ -10,23 +8,43 @@ const EMAILJS_TEMPLATE_ID = "template_y9ndlhp";
 const EMAILJS_PUBLIC_KEY = "STxU44Yj_0DPkBs73";
 
 const SOCIAL_LINKS = [
-  { label: "GitHub", href: "https://github.com/SakshamTejpal", Icon: PiGithubLogoLight },
-  { label: "Instagram", href: "https://www.instagram.com/saksham.tejpal_/", Icon: PiInstagramLogoLight },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/saksham-tejpal-654b88116/", Icon: PiLinkedinLogoLight },
+  { label: "GitHub", href: "https://github.com/SakshamTejpal" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/saksham-tejpal-654b88116/" },
+  { label: "Instagram", href: "https://www.instagram.com/saksham.tejpal_/" },
 ];
 
 const EMPTY_FORM = { name: "", email: "", message: "" };
+const STATUS_TEXT = {
+  sending: "→ sending…",
+  sent: "→ message sent",
+  failed: "→ couldn't send. try again",
+};
+const MIN_EDITOR_LINES = 8;
+
+// The message box looks like a tiny code editor: a line-number gutter that tracks the text.
+function useLineCount(textareaRef, value) {
+  const [lines, setLines] = useState(MIN_EDITOR_LINES);
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    const style = getComputedStyle(textarea);
+    const contentHeight = textarea.scrollHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+    setLines(Math.max(MIN_EDITOR_LINES, Math.round(contentHeight / parseFloat(style.lineHeight))));
+  }, [textareaRef, value]);
+  return lines;
+}
 
 export default function Contact() {
   const [form, setForm] = useState(EMPTY_FORM);
-  const [sending, setSending] = useState(false);
-  const isMobile = useIsMobile();
+  const [status, setStatus] = useState(null);
+  const textareaRef = useRef(null);
+  const gutterRef = useRef(null);
+  const lineCount = useLineCount(textareaRef, form.message);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSending(true);
+    setStatus("sending");
     try {
       await emailjs.send(
         EMAILJS_SERVICE_ID,
@@ -34,67 +52,78 @@ export default function Contact() {
         { from_name: form.name, from_email: form.email, message: form.message },
         { publicKey: EMAILJS_PUBLIC_KEY }
       );
-      alert("Message sent successfully!");
+      setStatus("sent");
       setForm(EMPTY_FORM);
     } catch (error) {
       console.error(error);
-      alert("Failed to send message. Please try again.");
-    } finally {
-      setSending(false);
+      setStatus("failed");
     }
   };
 
   return (
-    <section className="contact" id="contact">
-      <div className="contact-content">
-        <h2 className="contact-title">Let's Connect</h2>
-        <div className="contact-links">
-          {SOCIAL_LINKS.map(({ label, href, Icon }) => (
-            <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}>
-              {isMobile ? <Icon size={35} /> : <h4>{label}</h4>}
-            </a>
+    <section className="section" id="contact">
+      <h2 className="section-title" data-reveal>Let's Connect</h2>
+      <div className="contact">
+        <ul className="contact-links" data-reveal>
+          {SOCIAL_LINKS.map(({ label, href }) => (
+            <li key={label}>
+              <a href={href} target="_blank" rel="noopener noreferrer">
+                {label} <span aria-hidden="true">↗</span>
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-fields">
-            <input
-              name="name"
-              type="text"
-              placeholder="Name"
-              aria-label="Name"
-              autoComplete="name"
-              maxLength={100}
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              aria-label="Email"
-              autoComplete="email"
-              maxLength={254}
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-            <textarea
-              name="message"
-              placeholder="Write your message here…"
-              aria-label="Message"
-              maxLength={5000}
-              rows={5}
-              value={form.message}
-              onChange={handleChange}
-              required
-            />
+        <form className="contact-form" onSubmit={handleSubmit} data-reveal>
+          <input
+            name="name"
+            type="text"
+            placeholder="Name"
+            aria-label="Name"
+            autoComplete="name"
+            maxLength={100}
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            aria-label="Email"
+            autoComplete="email"
+            maxLength={254}
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+          <div className="editor">
+            <div className="editor-bar label">
+              <span>message.txt</span>
+              <span>{form.message.length} / 5000</span>
+            </div>
+            <div className="editor-body">
+              <div className="editor-gutter" ref={gutterRef} aria-hidden="true">
+                {Array.from({ length: lineCount }, (_, i) => <span key={i}>{i + 1}</span>)}
+              </div>
+              <textarea
+                ref={textareaRef}
+                name="message"
+                placeholder="// write your message"
+                aria-label="Message"
+                spellCheck={false}
+                maxLength={5000}
+                rows={MIN_EDITOR_LINES}
+                value={form.message}
+                onChange={handleChange}
+                onScroll={(e) => (gutterRef.current.scrollTop = e.target.scrollTop)}
+                required
+              />
+            </div>
           </div>
-          <div className="form-button">
-            <button type="submit" disabled={sending} aria-label="Send">
-              <span className="contact-button-text">{isMobile ? (sending ? "Sending…" : "Send") : "›"}</span>
-            </button>
+          <div className="contact-send">
+            <p className={`contact-status ${status ?? ""}`} aria-live="polite">{STATUS_TEXT[status]}</p>
+            <button type="submit" disabled={status === "sending"}>Send →</button>
           </div>
         </form>
       </div>

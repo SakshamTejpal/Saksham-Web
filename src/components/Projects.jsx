@@ -1,88 +1,55 @@
 import { useState } from "react";
 import projects from "../data/projects.json";
-import useIsMobile from "../hooks/useIsMobile";
 import "../styles/Projects.css";
 
-function ProjectDetails({ project }) {
-  return (
-    <>
-      <p className="project-info-description">{project.description}</p>
-      <div className="project-tech">
-        {project.techStack.split(",").map((tech) => (
-          <span key={tech} className="project-tech-badge">{tech.trim()}</span>
-        ))}
-      </div>
-      <div className="project-links">
-        {project.github && (
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link-text">
-            GitHub
-          </a>
-        )}
-        {project.live && (
-          <a href={project.live} target="_blank" rel="noopener noreferrer" className="project-link-text">
-            Live Demo
-          </a>
-        )}
-      </div>
-    </>
-  );
-}
-
-// Desktop: list on the left, details on the right. Mobile: list only, details open in a popup.
 export default function Projects() {
-  const [selected, setSelected] = useState(null);
-  const isMobile = useIsMobile();
-  const close = () => setSelected(null);
-
-  const list = (
-    <ul className="projects-list">
-      {projects.map((project) => (
-        <li
-          key={project.title}
-          className={`project-item ${selected === project ? "active" : ""}`}
-          onClick={() => setSelected(project)}
-        >
-          {project.title}
-        </li>
-      ))}
-    </ul>
-  );
+  const [openTitle, setOpenTitle] = useState(null);
 
   return (
-    <section className="projects" id="projects">
-      <div className="projects-content">
-        <h2 className="projects-title">Projects</h2>
+    <section className="section" id="projects">
+      <h2 className="section-title" data-reveal>Projects</h2>
+      <ol className="work">
+        {projects.map((project, index) => {
+          const isOpen = openTitle === project.title;
+          const tech = project.techStack.split(",").map((t) => t.trim());
+          return (
+            <li key={project.title} className={`work-item ${isOpen ? "open" : ""}`} data-reveal>
+              <button
+                className="work-row"
+                onClick={() => setOpenTitle(isOpen ? null : project.title)}
+                aria-expanded={isOpen}
+              >
+                <span className="work-index label">{String(index + 1).padStart(2, "0")}</span>
+                <span className="work-title">{project.title}</span>
+                <span className="work-tags label">{tech.slice(0, 2).join(" · ")}</span>
+                <span className="work-arrow" aria-hidden="true">→</span>
+              </button>
 
-        {isMobile ? (
-          <div className="projects-container">
-            {list}
-            {selected && (
-              <div className="project-popup" onClick={close}>
-                <div
-                  key={selected.title}
-                  className="project-popup-content fadein"
-                  onClick={(e) => e.stopPropagation()} // clicks inside the card shouldn't close it
-                >
-                  <h3 className="project-info-title">{selected.title}</h3>
-                  <ProjectDetails project={selected} />
-                  <button className="popup-close" onClick={close} aria-label="Close">✕</button>
+              {/* Animates open by growing its grid row from 0fr to 1fr. */}
+              <div className="work-detail" aria-hidden={!isOpen}>
+                <div className="work-detail-inner">
+                  <p className="work-description">{project.description}</p>
+                  <p className="work-stack label">{tech.join(" · ")}</p>
+                  {(project.github || project.live) && (
+                    <div className="work-links">
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" tabIndex={isOpen ? 0 : -1}>
+                          GitHub ↗
+                        </a>
+                      )}
+                      {project.live && (
+                        <a href={project.live} target="_blank" rel="noopener noreferrer" tabIndex={isOpen ? 0 : -1}>
+                          Live ↗
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
-            )}
-          </div>
-        ) : (
-          <div className="projects-container">
-            <div className="projects-list-container">{list}</div>
-            <div className="projects-info">
-              {selected && (
-                <div key={selected.title} className="fadein">
-                  <ProjectDetails project={selected} />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
+            </li>
+          );
+        })}
+      </ol>
     </section>
   );
 }

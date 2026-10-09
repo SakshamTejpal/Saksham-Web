@@ -1,45 +1,177 @@
-.hero-content {
-  height: 100vh;
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100svh;
+  min-height: 520px;
+  padding: clamp(96px, 24vh, 240px) var(--gutter) clamp(20px, 4vh, 40px);
+}
+
+/* ── 24-hour line ───────────────────────────── */
+.day-line {
+  position: relative;
+  height: 1px;
+  background: var(--hair);
+  transform-origin: left;
+  animation: draw 1.8s var(--ease) both;
+}
+
+/* a 1px tick for every hour */
+.day-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 1px;
+  height: 5px;
+  background: repeating-linear-gradient(90deg, var(--hair) 0 1px, transparent 1px calc(100% / 24));
+}
+
+.day-hours {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  font-size: 10px;
+  animation: fadeIn 1.4s var(--ease) 0.6s both;
+}
+
+.day-marker {
+  position: absolute;
+  top: -8px;
+  width: 1px;
+  height: 17px;
+  transition: left 1s var(--ease), opacity 1s var(--ease);
+}
+
+.day-marker::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: -2px;
+  width: 5px;
+  height: 5px;
+  background: inherit;
+}
+
+.day-marker.home {
+  background: var(--gold);
+  animation: fadeIn 1.2s var(--ease) 1.2s both;
+}
+
+.day-marker.visitor {
+  background: var(--paper);
+  opacity: 0;
+}
+
+.day-span {
+  position: absolute;
+  top: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 1.2s var(--ease);
+}
+
+.comparing .day-marker.visitor {
+  opacity: 1;
+}
+
+.comparing .day-span {
+  transform: scaleX(1);
+}
+
+/* ── Times ──────────────────────────────────── */
+.clock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px clamp(28px, 5vw, 72px);
+  margin-top: clamp(32px, 6vh, 56px);
+  animation: fadeIn 1.4s var(--ease) 0.9s both;
+}
+
+.clock-home,
+.clock-visitor {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.clock-time {
+  font: 400 clamp(26px, 3.4vw, 44px)/1 var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.clock-toggle {
+  font: 400 16px/1 var(--mono);
+  color: var(--muted);
+  transition: transform 1s var(--ease), color 0.6s var(--ease);
+}
+
+.clock-home:hover .clock-toggle {
+  color: var(--gold);
+}
+
+.comparing .clock-toggle {
+  transform: rotate(45deg);
+}
+
+.clock-visitor {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateX(-10px);
+  transition: opacity 1s var(--ease), filter 1s var(--ease), transform 1s var(--ease);
+}
+
+.comparing .clock-visitor {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.clock-visitor .clock-time {
+  color: var(--muted);
+}
+
+.clock-difference {
+  font: 400 13px/1 var(--mono);
+  color: var(--gold);
+}
+
+/* ── Name ───────────────────────────────────── */
+.hero-name-fit {
   width: 100%;
-  padding: 45vh 0 5vh 0;
-  overflow: hidden;
 }
 
-.hero-subtitle,
-.hero-title {
-  width: 100%;
-  overflow-wrap: break-word;
-  word-break: break-word;
+.hero-name {
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: 200;
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  animation: blurIn 1.8s var(--ease) 0.2s both;
 }
 
-.hero-subtitle {
-  font-size: 4vw;
-  line-height: 1.2;
-  text-align: left;
-  padding: 10px 0 0 120px;
+@keyframes draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
-.hero-title {
-  font-size: 15vw;
-  line-height: 1;
-  padding-top: 10px;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.clock-locating {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+@keyframes blurIn {
+  from { opacity: 0; filter: blur(16px); transform: translateY(12px); }
+  to { opacity: 1; filter: none; transform: none; }
 }
 
+/* Phones: leave room for the menu button in the bottom-right corner. */
 @media (max-width: 500px) {
-  .hero-content {
-    padding: 25vh 0 5vh 0;
-  }
-
-  .hero-title-comb {
-    font-size: 23vw;
-    line-height: 1.2;
-    text-align: left;
-    padding-left: 15px;
+  .hero {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   }
 }

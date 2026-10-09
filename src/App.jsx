@@ -4,19 +4,23 @@ import About from "./components/About";
 import Projects from "./components/Projects";
 import Timeline from "./components/Timeline";
 import Contact from "./components/Contact";
+import useReveal from "./hooks/useReveal";
 
 export default function App() {
+  const pageRef = useReveal();
+
   return (
-    <>
+    <div ref={pageRef}>
       <Navbar />
       <Hero />
       <About />
       <Projects />
       <Timeline />
       <Contact />
-      <footer>
-        <p>© {new Date().getFullYear()} Saksham Tejpal</p>
+      <footer className="footer">
+        <span className="label">© {new Date().getFullYear()} Saksham Tejpal</span>
+        <span className="label">Toronto</span>
       </footer>
-    </>
+    </div>
   );
 }

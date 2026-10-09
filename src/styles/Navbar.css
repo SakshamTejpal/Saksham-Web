@@ -1,104 +1,129 @@
-.navbar {
+.menu {
   position: fixed;
-  top: 30%;
-  right: 0;
-  width: 180px;
-  z-index: 1000;
-  pointer-events: none; /* only the open menu (.fade-in) receives clicks */
+  top: 50%;
+  right: clamp(16px, 2.5vw, 36px);
+  z-index: 100;
+  transform: translateY(calc(-50% + var(--drift, 0px)));
+  pointer-events: none; /* only the trigger and the open list take clicks */
 }
 
-.navbar.desktop.compact {
-  padding-left: 25px;
-  transition: all 0.2s ease;
-}
-
-/* "Menu" / "☰" / "⋮" / swipe hint shown while the menu is closed */
-.nav-trigger {
+.menu-trigger {
   position: absolute;
   top: 50%;
-  right: 50px;
+  right: 0;
+  padding: 12px 4px;
   transform: translateY(-50%);
-  font-size: 30px;
-  transition: all 0.1s ease;
-}
-
-.compact .nav-trigger {
-  right: 30px;
-  font-size: 20px;
-}
-
-.swipe-arrow {
-  animation: swipePulse 1.5s infinite;
-  font-size: 30px;
-}
-
-@keyframes swipePulse {
-  0%, 100% { transform: translateX(0); opacity: 0.5; }
-  50% { transform: translateX(-5px); opacity: 1; }
-}
-
-.nav-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  list-style: none;
-  transition: opacity 0.5s ease;
-}
-
-.navbar.desktop.compact .nav-list {
-  justify-content: center;
-  width: 140px;
-  height: 280px;
-  border-radius: 8px;
-  background: rgba(50, 50, 50, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-.navbar.mobile .nav-list {
-  margin-right: 20px;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  background: rgba(58, 58, 58, 0.3);
-  backdrop-filter: blur(5px);
-}
-
-.nav-item a {
-  font-size: 30px;
-  color: #fff;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.nav-item a:hover {
-  color: #dda50b;
-}
-
-.fade-in {
-  opacity: 1;
+  font: 400 12px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   pointer-events: auto;
+  transition: opacity 0.8s var(--ease);
 }
 
-.fade-out {
+.menu-lines {
+  display: block;
+  width: 22px;
+  height: 6px;
+  border-block: 1px solid currentColor;
+}
+
+.menu-list {
+  min-width: 220px;
+  padding: 22px 26px;
+  border: 1px solid var(--hair);
+  background: rgba(9, 9, 10, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(12px);
+  transition: opacity 0.8s var(--ease), transform 1s var(--ease), visibility 0s linear 1s;
+}
+
+.menu-list li {
+  opacity: 0;
+  transform: translateX(10px);
+  transition: opacity 0.8s var(--ease), transform 1s var(--ease);
+}
+
+.menu-list a {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 8px 0;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  transition: color 0.6s var(--ease), transform 0.8s var(--ease);
+}
+
+.menu-list a:hover,
+.menu-list a:focus-visible {
+  color: var(--paper);
+  transform: translateX(-4px);
+}
+
+.menu-index {
+  font: 400 11px/1 var(--mono);
+  transition: color 0.6s var(--ease);
+}
+
+.menu-list a:hover .menu-index,
+.menu-list a:focus-visible .menu-index {
+  color: var(--gold);
+}
+
+/* Open */
+.menu.open .menu-trigger {
   opacity: 0;
   pointer-events: none;
 }
 
+.menu.open .menu-list {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+  transition: opacity 0.8s var(--ease), transform 1s var(--ease), visibility 0s;
+}
+
+.menu.open .menu-list li {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(80ms + 60ms * var(--i));
+}
+
+/* Phones: a small square button in the bottom-right corner, clear of the content and in thumb reach. */
 @media (max-width: 500px) {
-  .navbar {
-    width: 80px;
+  .menu {
+    top: auto;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+    transform: none;
   }
 
-  .nav-trigger {
-    right: 20px;
+  .menu-trigger {
+    top: auto;
+    bottom: 0;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    transform: none;
+    border: 1px solid var(--hair);
+    background: rgba(9, 9, 10, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 10px;
   }
 
-  .nav-item a {
-    font-size: 16px;
+  .menu-list {
+    min-width: 200px;
+    padding: 18px 22px;
   }
 
-  .compact .nav-trigger {
-    right: 10px;
-    padding: 1px 6px;
+  .menu-list a {
+    font-size: 20px;
   }
 }

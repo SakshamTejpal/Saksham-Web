@@ -30,7 +30,6 @@
 .menu-list {
   position: relative;
   padding-right: 52px; /* room for the icon */
-  text-align: right;
 }
 
 .menu-list li {
@@ -56,7 +55,7 @@
 .menu-list a:hover,
 .menu-list a:focus-visible {
   color: var(--paper);
-  transform: translateX(-6px);
+  transform: translateX(6px);
 }
 
 .menu-index {

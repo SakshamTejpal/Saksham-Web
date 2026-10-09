@@ -5,7 +5,7 @@ const Highlight = ({ children }) => <span className="about-highlight">{children}
 
 export default function About() {
   return (
-    <section className="section" id="about" data-snap>
+    <section className="section about-section" id="about" data-snap>
       <div className="about">
         <div data-reveal>
           <img src={profilePic} alt="Saksham Tejpal" className="about-photo" />

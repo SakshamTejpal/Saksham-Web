@@ -1,15 +1,21 @@
-/* Large portrait beside the text, centred on each other. */
+/* One full screen: the portrait runs from the top edge to the bottom, text centred beside it. */
+.about-section {
+  padding-top: 0;
+}
+
 .about {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: clamp(32px, 7vw, 128px);
   align-items: center;
+  height: 100svh;
 }
 
 /* Editorial black-and-white portrait, square corners. */
 .about-photo {
   display: block;
-  width: 100%;
+  height: 100svh;
+  max-width: 55vw;
   aspect-ratio: 4 / 5;
   object-fit: cover;
   filter: grayscale(1) contrast(1.04) brightness(0.9);
@@ -32,5 +38,12 @@
 @media (max-width: 760px) {
   .about {
     grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .about-photo {
+    width: 100%;
+    max-width: none;
+    height: 75svh;
   }
 }

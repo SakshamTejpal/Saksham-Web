@@ -34,10 +34,18 @@ function utcOffset(zone, date) {
 }
 
 function formatDifference(minutes) {
-  if (minutes === 0) return "Same time";
   const hours = Math.floor(Math.abs(minutes) / 60);
   const rest = Math.abs(minutes) % 60;
   return `${minutes > 0 ? "+" : "−"}${hours}h${rest ? ` ${rest}m` : ""}`;
+}
+
+// Some browsers still report a few zones by their old names.
+const RENAMED_CITIES = { Calcutta: "Kolkata", Saigon: "Ho Chi Minh", Kiev: "Kyiv", Rangoon: "Yangon", Katmandu: "Kathmandu" };
+
+// "America/Argentina/Buenos_Aires" → "Buenos Aires"
+function cityName(zone) {
+  const city = zone.split("/").pop();
+  return (RENAMED_CITIES[city] ?? city).replace(/_/g, " ");
 }
 
 // Scales the text so it exactly fills its container's width on one line.
@@ -61,7 +69,6 @@ function useFitWidth() {
 
 export default function Hero() {
   const [now, setNow] = useState(() => new Date());
-  const [showVisitor, setShowVisitor] = useState(false);
   const nameRef = useFitWidth();
 
   useEffect(() => {
@@ -72,43 +79,46 @@ export default function Hero() {
   const homeAt = (minutesOfDay(HOME_ZONE, now) / 1440) * 100;
   const visitorAt = (minutesOfDay(VISITOR_ZONE, now) / 1440) * 100;
   const difference = utcOffset(VISITOR_ZONE, now) - utcOffset(HOME_ZONE, now);
+  const showVisitor = difference !== 0; // visitors in Saksham's time only see his clock
 
   return (
-    <section id="hero" className={`hero ${showVisitor ? "comparing" : ""}`}>
+    <section id="hero" className="hero" data-snap>
       <div className="day">
         <div className="day-line">
-          <span
-            className="day-span"
-            style={{ left: `${Math.min(homeAt, visitorAt)}%`, width: `${Math.abs(homeAt - visitorAt)}%` }}
-          />
+          {showVisitor && (
+            <span
+              className="day-span"
+              style={{ left: `${Math.min(homeAt, visitorAt)}%`, width: `${Math.abs(homeAt - visitorAt)}%` }}
+            />
+          )}
           <span className="day-marker home" style={{ left: `${homeAt}%` }} />
-          <span className="day-marker visitor" style={{ left: `${visitorAt}%` }} />
+          {showVisitor && <span className="day-marker visitor" style={{ left: `${visitorAt}%` }} />}
         </div>
         <div className="day-hours label" aria-hidden="true">
           {HOUR_LABELS.map((hour) => <span key={hour}>{hour}</span>)}
         </div>
 
-        <div className="clock">
-          <button
-            className="clock-home"
-            onClick={() => setShowVisitor((shown) => !shown)}
-            aria-expanded={showVisitor}
-            aria-label={`${HOME_CITY} time. Show your time`}
-          >
-            <span className="label">{HOME_CITY}</span>
-            <span className="clock-time">{formatTime(HOME_ZONE, now, true)}</span>
-            <span className="clock-toggle" aria-hidden="true">+</span>
-          </button>
-          <div className="clock-visitor" aria-hidden={!showVisitor}>
-            <span className="label">You</span>
-            <span className="clock-time">{formatTime(VISITOR_ZONE, now, false)}</span>
-            <span className="clock-difference">{formatDifference(difference)}</span>
+        <dl className="clock">
+          <div className="clock-row">
+            <dt className="label">{HOME_CITY}</dt>
+            <dd className="clock-time">{formatTime(HOME_ZONE, now, true)}</dd>
           </div>
-        </div>
+          {showVisitor && (
+            <div className="clock-row visitor">
+              <dt className="label">{cityName(VISITOR_ZONE)}</dt>
+              <dd className="clock-time">{formatTime(VISITOR_ZONE, now, true)}</dd>
+              <dd className="clock-difference">{formatDifference(difference)}</dd>
+            </div>
+          )}
+        </dl>
       </div>
 
-      <div className="hero-name-fit">
-        <h1 className="hero-name" ref={nameRef}>Saksham Tejpal</h1>
+      <div className="hero-intro">
+        <p className="hero-hello">Hello, I am</p>
+        <div className="hero-name-fit">
+          <h1 className="hero-name" ref={nameRef}>Saksham Tejpal</h1>
+        </div>
+        <p className="hero-role">AI Engineer &amp; Researcher</p>
       </div>
     </section>
   );

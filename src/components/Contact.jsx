@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import SectionTitle from "./SectionTitle";
 import "../styles/Contact.css";
 
 // EmailJS IDs are public by design; restrict allowed origins and rate limits in the EmailJS dashboard.
@@ -61,8 +62,8 @@ export default function Contact() {
   };
 
   return (
-    <section className="section" id="contact">
-      <h2 className="section-title" data-reveal>Let's Connect</h2>
+    <section className="section" data-snap id="contact">
+      <SectionTitle align="right">Let's Connect</SectionTitle>
       <div className="contact">
         <ul className="contact-links" data-reveal>
           {SOCIAL_LINKS.map(({ label, href }) => (

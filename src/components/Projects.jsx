@@ -1,13 +1,14 @@
 import { useState } from "react";
 import projects from "../data/projects.json";
+import SectionTitle from "./SectionTitle";
 import "../styles/Projects.css";
 
 export default function Projects() {
   const [openTitle, setOpenTitle] = useState(null);
 
   return (
-    <section className="section" id="projects">
-      <h2 className="section-title" data-reveal>Projects</h2>
+    <section className="section" data-snap id="projects">
+      <SectionTitle align="right">Projects</SectionTitle>
       <ol className="work">
         {projects.map((project, index) => {
           const isOpen = openTitle === project.title;

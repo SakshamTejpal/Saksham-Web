@@ -5,9 +5,11 @@ import Projects from "./components/Projects";
 import Timeline from "./components/Timeline";
 import Contact from "./components/Contact";
 import useReveal from "./hooks/useReveal";
+import useSmoothScroll from "./hooks/useSmoothScroll";
 
 export default function App() {
   const pageRef = useReveal();
+  useSmoothScroll();
 
   return (
     <div ref={pageRef}>

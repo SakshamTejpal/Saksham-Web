@@ -4,7 +4,7 @@
   justify-content: space-between;
   height: 100svh;
   min-height: 520px;
-  padding: clamp(96px, 24vh, 240px) var(--gutter) clamp(20px, 4vh, 40px);
+  padding: clamp(36px, 8vh, 88px) var(--gutter) clamp(20px, 4vh, 40px);
 }
 
 /* ── 24-hour line ───────────────────────────── */
@@ -60,7 +60,7 @@
 
 .day-marker.visitor {
   background: var(--paper);
-  opacity: 0;
+  animation: fadeIn 1.2s var(--ease) 1.5s both;
 }
 
 .day-span {
@@ -68,69 +68,44 @@
   top: 0;
   height: 1px;
   background: var(--gold);
-  transform: scaleX(0);
-  transition: transform 1.2s var(--ease);
-}
-
-.comparing .day-marker.visitor {
-  opacity: 1;
-}
-
-.comparing .day-span {
-  transform: scaleX(1);
+  transform-origin: left;
+  animation: draw 1.4s var(--ease) 1.6s both;
 }
 
 /* ── Times ──────────────────────────────────── */
 .clock {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
   align-items: baseline;
-  gap: 12px clamp(28px, 5vw, 72px);
-  margin-top: clamp(32px, 6vh, 56px);
-  animation: fadeIn 1.4s var(--ease) 0.9s both;
+  gap: 10px 16px;
+  margin-top: clamp(28px, 5vh, 48px);
 }
 
-.clock-home,
-.clock-visitor {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
+.clock-row {
+  display: contents; /* rows share one grid so the cities and times line up */
+}
+
+.clock-row dt {
+  grid-column: 1; /* every city starts a new row */
+}
+
+.clock-row .label {
+  animation: fadeIn 1.4s var(--ease) 0.9s both;
 }
 
 .clock-time {
   font: 400 clamp(26px, 3.4vw, 44px)/1 var(--mono);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.03em;
+  animation: fadeIn 1.4s var(--ease) 0.9s both;
 }
 
-.clock-toggle {
-  font: 400 16px/1 var(--mono);
-  color: var(--muted);
-  transition: transform 1s var(--ease), color 0.6s var(--ease);
+.clock-row.visitor > * {
+  animation: blurIn 1.4s var(--ease) 1.5s both;
 }
 
-.clock-home:hover .clock-toggle {
-  color: var(--gold);
-}
-
-.comparing .clock-toggle {
-  transform: rotate(45deg);
-}
-
-.clock-visitor {
-  opacity: 0;
-  filter: blur(6px);
-  transform: translateX(-10px);
-  transition: opacity 1s var(--ease), filter 1s var(--ease), transform 1s var(--ease);
-}
-
-.comparing .clock-visitor {
-  opacity: 1;
-  filter: none;
-  transform: none;
-}
-
-.clock-visitor .clock-time {
+.clock-row.visitor .clock-time {
   color: var(--muted);
 }
 
@@ -139,7 +114,21 @@
   color: var(--gold);
 }
 
-/* ── Name ───────────────────────────────────── */
+/* ── Hello, name, role ─────────────────────── */
+.hero-hello,
+.hero-role {
+  font-size: clamp(18px, 2.4vw, 36px);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--muted);
+}
+
+.hero-hello {
+  margin-bottom: clamp(8px, 1.4vw, 20px);
+  animation: blurIn 1.6s var(--ease) 0.1s both;
+}
+
 .hero-name-fit {
   width: 100%;
 }
@@ -148,10 +137,15 @@
   display: inline-block;
   white-space: nowrap;
   font-weight: 200;
-  line-height: 0.8;
-  letter-spacing: -0.035em;
-  text-transform: uppercase;
+  line-height: 1.1; /* tall enough to hold the descenders of j and p */
+  letter-spacing: -0.045em;
   animation: blurIn 1.8s var(--ease) 0.2s both;
+}
+
+.hero-role {
+  margin-top: clamp(12px, 2.2vw, 36px);
+  text-align: right;
+  animation: blurIn 1.6s var(--ease) 0.5s both;
 }
 
 @keyframes draw {

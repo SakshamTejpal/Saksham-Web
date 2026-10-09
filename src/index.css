@@ -26,7 +26,11 @@
 
 html {
   background: var(--ink);
-  scroll-behavior: smooth;
+  scrollbar-width: none; /* no visible scrollbar (Firefox) */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* no visible scrollbar (Chrome, Safari) */
 }
 
 body {
@@ -71,11 +75,21 @@ ul {
 }
 
 .section-title {
-  margin-bottom: clamp(40px, 8vh, 96px);
-  font-size: clamp(56px, 11vw, 176px);
+  margin-bottom: clamp(40px, 8vh, 88px);
+  overflow: hidden; /* the mask the heading rises out of */
+  font-size: clamp(44px, 7.5vw, 120px);
   font-weight: 200;
-  line-height: 0.9;
+  line-height: 1;
   letter-spacing: -0.05em;
+}
+
+.section-title.right {
+  text-align: right;
+}
+
+.section-title span {
+  display: inline-block;
+  padding-bottom: 0.08em; /* keeps descenders (j, y) inside the mask */
 }
 
 .label {
@@ -105,12 +119,26 @@ ul {
   filter: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+/* Headings rise instead of fading: the heading itself stays put, its text slides up into view. */
+.section-title[data-reveal] {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  transition: none;
+}
 
-  [data-reveal] {
+.section-title[data-reveal] span {
+  transform: translateY(105%);
+  transition: transform 1.4s var(--ease);
+}
+
+.section-title[data-revealed] span {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  .section-title[data-reveal] span {
     opacity: 1;
     transform: none;
     filter: none;

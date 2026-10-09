@@ -1,58 +1,49 @@
 .menu {
+  --fold-x: 40px; /* how far items travel toward the icon when folding */
   position: fixed;
   top: 50%;
   right: clamp(16px, 2.5vw, 36px);
   z-index: 100;
-  transform: translateY(calc(-50% + var(--drift, 0px)));
-  pointer-events: none; /* only the trigger and the open list take clicks */
-}
-
-.menu-trigger {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  padding: 12px 4px;
   transform: translateY(-50%);
-  font: 400 12px/1 var(--mono);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  pointer-events: auto;
-  transition: opacity 0.8s var(--ease);
+  pointer-events: none; /* only the links and the icon take clicks, never the empty area */
 }
 
-.menu-lines {
-  display: block;
-  width: 22px;
-  height: 6px;
-  border-block: 1px solid currentColor;
-}
-
-.menu-list {
-  min-width: 220px;
-  padding: 22px 26px;
+/* Panel behind the reopened list; invisible on the first screen. */
+.menu::before {
+  content: "";
+  position: absolute;
+  inset: -18px -16px -18px -28px;
   border: 1px solid var(--hair);
-  background: rgba(9, 9, 10, 0.72);
+  background: rgba(9, 9, 10, 0.8);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   opacity: 0;
-  visibility: hidden;
-  transform: translateX(12px);
-  transition: opacity 0.8s var(--ease), transform 1s var(--ease), visibility 0s linear 1s;
+  pointer-events: none;
+  transition: opacity 0.8s var(--ease);
+}
+
+.menu-list {
+  position: relative;
+  padding-right: 52px; /* room for the icon */
+  text-align: right;
 }
 
 .menu-list li {
-  opacity: 0;
-  transform: translateX(10px);
-  transition: opacity 0.8s var(--ease), transform 1s var(--ease);
+  transition:
+    opacity 0.8s var(--ease) calc(0.25s + 70ms * var(--i)),
+    transform 1s var(--ease) calc(0.25s + 70ms * var(--i)),
+    filter 0.8s var(--ease) calc(0.25s + 70ms * var(--i)),
+    visibility 0s;
 }
 
 .menu-list a {
-  display: flex;
+  pointer-events: auto;
+  display: inline-flex;
   align-items: baseline;
   gap: 16px;
-  padding: 8px 0;
-  font-size: 22px;
-  letter-spacing: -0.01em;
+  padding: 6px 0;
+  font-size: clamp(22px, 1.9vw, 30px);
+  letter-spacing: -0.02em;
   color: var(--muted);
   transition: color 0.6s var(--ease), transform 0.8s var(--ease);
 }
@@ -60,7 +51,7 @@
 .menu-list a:hover,
 .menu-list a:focus-visible {
   color: var(--paper);
-  transform: translateX(-4px);
+  transform: translateX(-6px);
 }
 
 .menu-index {
@@ -73,27 +64,115 @@
   color: var(--gold);
 }
 
-/* Open */
-.menu.open .menu-trigger {
-  opacity: 0;
+/* Double-dash icon, centred on the right of the list */
+.menu-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
   pointer-events: none;
 }
 
-.menu.open .menu-list {
+.menu-lines,
+.menu-lines::before,
+.menu-lines::after {
+  display: block;
+  width: 26px;
+  height: 1px;
+}
+
+.menu-lines {
+  position: relative;
+}
+
+.menu-lines::before,
+.menu-lines::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  background: var(--paper);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.9s var(--ease), top 0.6s var(--ease), rotate 0.6s var(--ease);
+}
+
+.menu-lines::before {
+  top: -3px;
+}
+
+.menu-lines::after {
+  top: 3px;
+}
+
+/* ── Folded: items shrink toward the icon (last one first), then the dashes draw in ── */
+.menu.collapsed .menu-list li {
+  opacity: 0;
+  filter: blur(4px);
+  visibility: hidden;
+  transform: translate(var(--fold-x), calc((2 - var(--i)) * 100%)) scale(0.7);
+  transition:
+    opacity 0.6s var(--ease) calc(70ms * (4 - var(--i))),
+    transform 0.9s var(--ease) calc(70ms * (4 - var(--i))),
+    filter 0.6s var(--ease) calc(70ms * (4 - var(--i))),
+    visibility 0s linear 1.2s;
+}
+
+.menu.collapsed .menu-toggle {
+  pointer-events: auto;
+}
+
+.menu.collapsed .menu-lines::before,
+.menu.collapsed .menu-lines::after {
+  transform: scaleX(1);
+  transition-delay: 0.45s;
+}
+
+.menu.collapsed .menu-lines::after {
+  transition-delay: 0.55s;
+}
+
+/* ── Folded and reopened: the list returns on a panel and the dashes become an × ── */
+.menu.collapsed.open::before {
   opacity: 1;
+}
+
+.menu.collapsed.open .menu-list li {
+  opacity: 1;
+  filter: none;
   visibility: visible;
   transform: none;
-  pointer-events: auto;
-  transition: opacity 0.8s var(--ease), transform 1s var(--ease), visibility 0s;
+  transition:
+    opacity 0.8s var(--ease) calc(0.1s + 60ms * var(--i)),
+    transform 1s var(--ease) calc(0.1s + 60ms * var(--i)),
+    filter 0.8s var(--ease) calc(0.1s + 60ms * var(--i)),
+    visibility 0s;
 }
 
-.menu.open .menu-list li {
-  opacity: 1;
-  transform: none;
-  transition-delay: calc(80ms + 60ms * var(--i));
+.menu.collapsed.open .menu-lines::before,
+.menu.collapsed.open .menu-lines::after {
+  top: 0;
+  transition-delay: 0s;
 }
 
-/* Phones: a small square button in the bottom-right corner, clear of the content and in thumb reach. */
+.menu.collapsed.open .menu-lines::before,
+.menu.collapsed.open .menu-lines::after {
+  transform-origin: center; /* turn around the middle so the dashes cross into an × */
+}
+
+.menu.collapsed.open .menu-lines::before {
+  rotate: 45deg;
+}
+
+.menu.collapsed.open .menu-lines::after {
+  rotate: -45deg;
+}
+
+/* Phones: the icon sits in the bottom-right corner and the list opens above it. */
 @media (max-width: 500px) {
   .menu {
     top: auto;
@@ -102,28 +181,28 @@
     transform: none;
   }
 
-  .menu-trigger {
+  .menu.collapsed .menu-list li {
+    transform: translate(var(--fold-x), calc((4 - var(--i)) * 100%)) scale(0.7);
+  }
+
+  .menu-list {
+    padding-right: 0;
+    padding-bottom: 56px;
+  }
+
+  .menu-toggle {
     top: auto;
     bottom: 0;
-    display: grid;
-    place-items: center;
     width: 44px;
     height: 44px;
-    padding: 0;
-    transform: none;
+    margin-top: 0;
     border: 1px solid var(--hair);
     background: rgba(9, 9, 10, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    font-size: 10px;
   }
 
-  .menu-list {
-    min-width: 200px;
-    padding: 18px 22px;
-  }
-
-  .menu-list a {
-    font-size: 20px;
+  .menu::before {
+    inset: -18px -12px 56px -24px;
   }
 }

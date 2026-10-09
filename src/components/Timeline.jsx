@@ -1,10 +1,11 @@
 import timeline from "../data/timeline.json";
+import SectionTitle from "./SectionTitle";
 import "../styles/Timeline.css";
 
 export default function Timeline() {
   return (
-    <section className="section" id="timeline">
-      <h2 className="section-title" data-reveal>Over the years</h2>
+    <section className="section" data-snap id="timeline">
+      <SectionTitle>Over the years</SectionTitle>
       <ol className="timeline">
         {timeline.map((item) => (
           <li key={item.title} className="timeline-row" data-reveal>
